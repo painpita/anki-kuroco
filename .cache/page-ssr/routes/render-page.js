@@ -461,8 +461,10 @@ exports.onRenderBody = onRenderBody;
 exports.components = {
   "component---cache-dev-404-page-js": () => __webpack_require__.e(/*! import() | component---cache-dev-404-page-js */ "component---cache-dev-404-page-js").then(__webpack_require__.bind(__webpack_require__, /*! ./../../dev-404-page.js */ "./.cache/dev-404-page.js")),
   "component---src-pages-404-js": () => __webpack_require__.e(/*! import() | component---src-pages-404-js */ "component---src-pages-404-js").then(__webpack_require__.bind(__webpack_require__, /*! ./../../../src/pages/404.js */ "./src/pages/404.js")),
+  "component---src-pages-card-map-js": () => __webpack_require__.e(/*! import() | component---src-pages-card-map-js */ "component---src-pages-card-map-js").then(__webpack_require__.bind(__webpack_require__, /*! ./../../../src/pages/card-map.js */ "./src/pages/card-map.js")),
   "component---src-pages-index-js": () => __webpack_require__.e(/*! import() | component---src-pages-index-js */ "component---src-pages-index-js").then(__webpack_require__.bind(__webpack_require__, /*! ./../../../src/pages/index.js */ "./src/pages/index.js")),
   "component---src-pages-page-2-js": () => __webpack_require__.e(/*! import() | component---src-pages-page-2-js */ "component---src-pages-page-2-js").then(__webpack_require__.bind(__webpack_require__, /*! ./../../../src/pages/page-2.js */ "./src/pages/page-2.js")),
+  "component---src-pages-profile-js": () => __webpack_require__.e(/*! import() | component---src-pages-profile-js */ "component---src-pages-profile-js").then(__webpack_require__.bind(__webpack_require__, /*! ./../../../src/pages/profile.js */ "./src/pages/profile.js")),
   "component---src-pages-using-ssr-js": () => __webpack_require__.e(/*! import() | component---src-pages-using-ssr-js */ "component---src-pages-using-ssr-js").then(__webpack_require__.bind(__webpack_require__, /*! ./../../../src/pages/using-ssr.js */ "./src/pages/using-ssr.js")),
   "component---src-pages-using-typescript-tsx": () => __webpack_require__.e(/*! import() | component---src-pages-using-typescript-tsx */ "component---src-pages-using-typescript-tsx").then(__webpack_require__.bind(__webpack_require__, /*! ./../../../src/pages/using-typescript.tsx */ "./src/pages/using-typescript.tsx")),
   "component---src-templates-using-dsg-js": () => __webpack_require__.e(/*! import() | component---src-templates-using-dsg-js */ "component---src-templates-using-dsg-js").then(__webpack_require__.bind(__webpack_require__, /*! ./../../../src/templates/using-dsg.js */ "./src/templates/using-dsg.js"))
@@ -5251,6 +5253,39 @@ module.exports = require("/Users/nm0038/diverta/anki-kuroco/node_modules/react/i
 
 /***/ }),
 
+/***/ "assert":
+/*!*************************!*\
+  !*** external "assert" ***!
+  \*************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("assert");
+
+/***/ }),
+
+/***/ "events":
+/*!*************************!*\
+  !*** external "events" ***!
+  \*************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("events");
+
+/***/ }),
+
+/***/ "fs":
+/*!*********************!*\
+  !*** external "fs" ***!
+  \*********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("fs");
+
+/***/ }),
+
 /***/ "http":
 /*!***********************!*\
   !*** external "http" ***!
@@ -5270,6 +5305,28 @@ module.exports = require("http");
 
 "use strict";
 module.exports = require("https");
+
+/***/ }),
+
+/***/ "os":
+/*!*********************!*\
+  !*** external "os" ***!
+  \*********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("os");
+
+/***/ }),
+
+/***/ "path":
+/*!***********************!*\
+  !*** external "path" ***!
+  \***********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("path");
 
 /***/ }),
 
@@ -5295,6 +5352,17 @@ module.exports = require("stream");
 
 /***/ }),
 
+/***/ "tty":
+/*!**********************!*\
+  !*** external "tty" ***!
+  \**********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("tty");
+
+/***/ }),
+
 /***/ "url":
 /*!**********************!*\
   !*** external "url" ***!
@@ -5303,6 +5371,17 @@ module.exports = require("stream");
 
 "use strict";
 module.exports = require("url");
+
+/***/ }),
+
+/***/ "util":
+/*!***********************!*\
+  !*** external "util" ***!
+  \***********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("util");
 
 /***/ }),
 
