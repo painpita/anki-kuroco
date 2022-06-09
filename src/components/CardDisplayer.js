@@ -1,9 +1,7 @@
 import React from "react"
 import axios from "../../authAxios"
 import Card from "./Card"
-import { Grow, FormControlLabel, Switch } from "@mui/material";
 import "./card-displayer.scss"
-import { on } from "events";
 import { navigate } from "gatsby";
 import Button from "@mui/material/Button";
 import RefreshIcon from '@mui/icons-material/Refresh';

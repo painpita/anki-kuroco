@@ -1,5 +1,4 @@
 import React from "react"
-import { Link } from "gatsby"
 import { isLoggedIn, loggedUser } from "../services/auth"
 import Login from "./Login"
 import Logout from "./Logout"
