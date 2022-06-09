@@ -31,8 +31,8 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build --verbose
-      - name: Generate
-        run: npm run generate
+      - name: Serve
+        run: npm run serve
         # - name: Zip artifact for upload
         #  run: cd dist && zip ../dist.zip . -r
       - name: Archive Production Artifact
