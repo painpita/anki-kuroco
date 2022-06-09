@@ -7,22 +7,25 @@ import Button from "@mui/material/Button";
 import RefreshIcon from '@mui/icons-material/Refresh';
 class CardDisplayer extends React.Component {
   data;
-  constructor(){
+  constructor(props){
     super()
     this.state = {
       cards:[]
     }
   }
-
-  refreshKanjis(){
-    console.log("refreshing")
-    navigate('/')
-  }
   async componentDidMount(){
-    let numberOfCards=8
-    const cardReq = await axios.get("/4/random-cards?cnt="+numberOfCards)
-    const cards = cardReq.data.list
-    this.setState({ cards : cards })
+    let cardsReq = null
+    let cards = []
+    try{
+      if(this.props.myCards==="false") cardsReq = await axios.get("/4/random-cards?cnt="+this.props.numberOfCards)
+      else cardsReq = await axios.get("/6/my-cards?cnt="+this.props.numberOfCards)
+      cards = cardsReq.data.list
+    }
+    catch{
+      navigate("/profile")
+    }
+
+    this.setState({ cards : await cards })
   }
 
   render(){
@@ -33,11 +36,13 @@ class CardDisplayer extends React.Component {
             card=>
               <Card key={card.topics_id} card={card} ></Card>
           )
-    const button = <Button key="button" onClick={()=>this.componentDidMount()}><RefreshIcon/></Button>
-    return <div className="flexCardContainer">
-      {cards}
-      {button}
-      </div>
+    const button = <Button style={{position:"absolute",right:"5%", bottom:"5%", "font-size":"xx-large", color:"#333"}} key="button" onClick={()=>this.componentDidMount()}><RefreshIcon/></Button>
+    return <div>
+            <div className="flexCardContainer">
+              {cards}
+              </div>
+              {button}
+          </div>
   }
 }
 
