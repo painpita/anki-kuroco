@@ -31,15 +31,13 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build --verbose
-      - name: Serve
-        run: npm run serve
         # - name: Zip artifact for upload
         #  run: cd dist && zip ../dist.zip . -r
       - name: Archive Production Artifact
         uses: actions/upload-artifact@v2
         with:
           name: ${{ steps.get_branch.outputs.sha }}-${{ github.run_id }}
-          path: dist
+          path: public
           retention-days: 7
       - name: Wait for Artifact download
         run: sleep 15
