@@ -5,6 +5,7 @@
           "destination": "/index.html"
         }
       ],
+    "stale_while_revalidate":"0",
     "redirects": [],
     "basic":[],
     "ip_restrictions":[]
