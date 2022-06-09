@@ -19,8 +19,20 @@ const Header = ({ siteTitle }) => (
         textDecoration: `none`,
       }}
     >
-      {siteTitle}
+      Cards
     </Link>
+
+    <Link
+      to="/profile"
+      style={{
+        fontSize: `var(--font-sm)`,
+        textDecoration: `none`,
+      }}
+    >
+      Profile
+    </Link>
+
+    
     <img
       alt="Kuroco logo"
       height={20}
