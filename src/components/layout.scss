@@ -1,7 +1,7 @@
 :root {
   --border-radius: 4px;
   --color-text: #333;
-  --color-primary: #7026b9;
+  --color-primary: #333;
   --color-code-bg: #fff4db;
   --color-code: #8a6534;
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
@@ -24,6 +24,7 @@
   --size-content: 54rem;
   --size-gutter: var(--space-5);
   --size-gap: var(--space-6);
+
 }
 html {
   -webkit-text-size-adjust: 100%;
@@ -32,6 +33,8 @@ html {
   font-size: var(--font-md);
   line-height: var(--line-height-normal);
   overflow-y: scroll;
+  background-image: linear-gradient(25deg,#d64c7f,#ee4758 50%);
+  height:100%;
 }
 body {
   -moz-osx-font-smoothing: grayscale;
