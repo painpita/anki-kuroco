@@ -1,10 +1,10 @@
 import React from "react";
-import Counter from "../components/counter"
-import Layout from "../layouts/index"
+import Layout from "../components/Layout"
+import CardDisplayer from "../components/CardDisplayer";
+import Login from "../components/Login"
 const index = () => <div>
   <Layout>
-    <div>Hello world</div>
-    <Counter color="black"></Counter>
+    <CardDisplayer></CardDisplayer>
   </Layout>
   </div>
 
