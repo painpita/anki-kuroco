@@ -4,7 +4,6 @@ const preferDefault = m => (m && m.default) || m
 
 
 exports.components = {
-  "component---cache-dev-404-page-js": preferDefault(require("/Users/nm0038/diverta/anki-kuroco/.cache/dev-404-page.js")),
   "component---src-pages-404-js": preferDefault(require("/Users/nm0038/diverta/anki-kuroco/src/pages/404.js")),
   "component---src-pages-card-map-js": preferDefault(require("/Users/nm0038/diverta/anki-kuroco/src/pages/card-map.js")),
   "component---src-pages-index-js": preferDefault(require("/Users/nm0038/diverta/anki-kuroco/src/pages/index.js")),
