@@ -1,5 +1,5 @@
 import React from "react"
-import { isLoggedIn, loggedUser } from "../services/auth"
+import { isLoggedIn } from "../services/auth"
 import Login from "./Login"
 import Logout from "./Logout"
 class Auth extends React.Component {
@@ -12,10 +12,9 @@ class Auth extends React.Component {
   
   async componentDidMount(){
       let user = await isLoggedIn()
-      console.log(user)
       this.setState({user})
-
   }
+
   render(){
     console.log(this.state.user)
     if(this.state.user===null){
