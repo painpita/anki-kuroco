@@ -65,7 +65,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Build
-        run: npm run build --verbose
+        run: npm run build --verbose --max-old-space-size=1024
       - name: Generate
         run: npm run generate
         # - name: Zip artifact for upload
