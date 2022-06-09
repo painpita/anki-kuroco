@@ -21,8 +21,8 @@ const setAccessTokenOnRequestHeader = (rcmsApiAccessToken) => {
 }
 
 export const handleLogin = async ({ email, password }) => {
-    const {data:{grant_token}} = await axios.post("/4/login",{email,password})
-    const {data:{access_token}} = await axios.post("/4/token",{grant_token})
+    const {data:{grant_token}} = await axios.post("/6/login",{email,password})
+    const {data:{access_token}} = await axios.post("/6/token",{grant_token})
     setUser({username:email})
     setAccessTokenOnRequestHeader(access_token)
 }
@@ -30,7 +30,7 @@ export const handleLogin = async ({ email, password }) => {
 export const handleLogout = async () => {
   console.log("got in here")
   try{
-    await axios.post("/3/logout")
+    await axios.post("/6/logout")
   }
   catch{}
   setUser(null)
@@ -39,7 +39,7 @@ export const handleLogout = async () => {
 
 export const isLoggedIn = async () => {
   try{
-      const {data} = await axios.get('/4/profile')
+      const {data} = await axios.get('/6/profile')
       setUser({
         email : data.email, 
         name1 : data.name1, 
