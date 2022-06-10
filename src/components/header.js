@@ -27,11 +27,23 @@ const Header = ({ siteTitle }) => (
       <Link
         to="/my-cards"
         style={{
+          marginRight:"20px",
           fontSize: `var(--font-sm)`,
           textDecoration: `none`,
         }}
       >
         My cards
+      </Link>
+      <Link
+        to="/new"
+        style={{
+          marginRight:"20px",
+
+          fontSize: `var(--font-sm)`,
+          textDecoration: `none`,
+        }}
+      >
+        New card
       </Link>
     </span>
     
