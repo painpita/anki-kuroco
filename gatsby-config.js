@@ -1,7 +1,14 @@
 module.exports = {
     siteMetadata : {
-        title: "Anki app",
+        title: "KuroKanji",
         author: "dimitri@diverta.co",
     },
-    plugins: [`gatsby-plugin-sass`,],
+    plugins: [`gatsby-plugin-sass`,
+    {
+        resolve: 'gatsby-plugin-manifest',
+        options: {
+          icon: 'src/favicon.png',
+        },
+      },
+],
 }
