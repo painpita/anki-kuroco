@@ -5,7 +5,6 @@ import "./card-displayer.scss"
 import { navigate } from "gatsby";
 import { Paper } from "@mui/material";
 class CardDisplayer extends React.Component {
-  data;
   constructor(props){
     super()
     this.state = {
@@ -14,6 +13,7 @@ class CardDisplayer extends React.Component {
   }
   async componentDidMount(){
     try{
+      console.log(this.props)
       let cardsReq = await axios.get("/4/card-detail/"+this.props.topics_id)
       await this.setState({card:cardsReq.data.details})
     }

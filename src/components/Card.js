@@ -8,7 +8,7 @@ class Card extends React.Component {
     }
 
     handleClick = () => {
-      navigate('/card_detail', {state:this.props})
+      navigate('/card_details/'+this.props.card.topics_id, {state:this.props})
     }
     styles = {}
    render(){
