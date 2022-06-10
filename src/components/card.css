@@ -6,7 +6,10 @@
   perspective: 500px;
   margin:10px;
   border-radius: 5px;
+}
 
+.card:hover{
+  cursor: pointer;
 }
 
 .content {
