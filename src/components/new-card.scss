@@ -1,0 +1,29 @@
+.paper{
+    background-color: black;
+    color:white;
+    text-align: center;
+    height:80%;
+    width:30%;
+    position:absolute;
+    left: 0; 
+    right: 0; 
+    margin-left: auto; 
+    margin-right: auto; 
+}
+
+.kanjiInput{
+    background-color: white;
+}
+
+.MuiSlider{
+    color:white;
+}
+
+.MuiSlider-thumb:not(.MuiSlider-active) {
+    transition: left 0.2s ease-out;
+  }
+  
+  .MuiSlider-track {
+    transition: width 0.2s ease-out;
+  }
+  
