@@ -6,7 +6,7 @@ const cardDetail = (props) => {
   console.log(props)
   return <div>
   <Layout>
-    <CardDetail topics_id={12}></CardDetail>
+    <CardDetail topics_id={props.id}></CardDetail>
   </Layout>
   </div>
 }
