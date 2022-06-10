@@ -6,6 +6,7 @@
   perspective: 500px;
   margin:10px;
   border-radius: 5px;
+  overflow:hidden;
 }
 
 .card:hover{
@@ -59,6 +60,8 @@
   flex:1;
   font-weight: bolder;
   font-size: xx-large;
+  max-height:40%;
+  overflow:hidden;
 }
 .back .pronunciations{
   flex:1;
