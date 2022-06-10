@@ -17,8 +17,8 @@ class CardDisplayer extends React.Component {
     let cardsReq = null
     let cards = []
     try{
-      if(this.props.myCards==="false") cardsReq = await axios.get("/4/random-cards?cnt="+this.props.numberOfCards)
-      else cardsReq = await axios.get("/6/my-cards?cnt="+this.props.numberOfCards)
+      if(this.props.myCards) cardsReq = await axios.get("/6/my-cards?cnt="+this.props.numberOfCards)
+      else cardsReq = await axios.get("/4/random-cards?cnt="+this.props.numberOfCards)
       cards = cardsReq.data.list
     }
     catch{
@@ -36,7 +36,7 @@ class CardDisplayer extends React.Component {
             card=>
               <Card key={card.topics_id} card={card} ></Card>
           )
-    const button = <Button style={{position:"absolute",right:"5%", bottom:"5%", "font-size":"xx-large", color:"#333"}} key="button" onClick={()=>this.componentDidMount()}><RefreshIcon/></Button>
+    const button = <Button style={{position:"absolute",right:"5%", bottom:"5%", fontSize:"xx-large", color:"#333"}} key="button" onClick={()=>this.componentDidMount()}><RefreshIcon/></Button>
     return <div>
             <div className="flexCardContainer">
               {cards}

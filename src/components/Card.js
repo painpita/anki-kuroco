@@ -1,17 +1,18 @@
 import React from "react"
 import "./card.css"
-import motion from "framer-motion"
-
+import { navigate } from "gatsby";
 
 class Card extends React.Component {
     constructor(props){
       super()
     }
 
+    handleClick = () => {
+      navigate('/card_detail', {state:this.props})
+    }
     styles = {}
    render(){
-      return <div className="card">
-      
+      return <div role="select" className="card" onClick={this.handleClick} onKeyDown={this.handleClick}>
       <div className="content">
         <div className="front">
           {this.props.card.ext_1}

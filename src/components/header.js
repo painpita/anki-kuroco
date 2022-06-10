@@ -1,7 +1,6 @@
 import * as React from "react"
 import PropTypes from "prop-types"
 import { Link } from "gatsby"
-
 const Header = ({ siteTitle }) => (
   <header
     style={{
@@ -13,10 +12,11 @@ const Header = ({ siteTitle }) => (
     }}
   >
 
-    <span className="link-group-left">
+    <span>
       <Link
         to="/"
         style={{
+          marginRight:"20px",
           fontSize: `var(--font-sm)`,
           textDecoration: `none`,
         }}
@@ -35,10 +35,12 @@ const Header = ({ siteTitle }) => (
       </Link>
     </span>
     
-    <span className="link-group-right">
+    <span className="link-group link-group-right">
       <Link
         to="/profile"
         style={{
+          marginRight:"20px",
+
           fontSize: `var(--font-sm)`,
           textDecoration: `none`,
         }}

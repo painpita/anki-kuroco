@@ -3,7 +3,7 @@ import Layout from "../components/Layout"
 import CardDisplayer from "../components/CardDisplayer";
 const index = () => <div>
   <Layout>
-    <CardDisplayer myCards="false" numberOfCards={5}></CardDisplayer>
+    <CardDisplayer numberOfCards={10}></CardDisplayer>
   </Layout>
   </div>
 

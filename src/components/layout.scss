@@ -55,11 +55,7 @@ a {
   text-decoration-thickness: 1.5px;
   text-underline-offset: 2px;
 }
-a:active,
-a:hover {
-  outline-width: 0;
-  text-decoration: none;
-}
+
 abbr[title] {
   border-bottom: 1px dotted hsla(0, 0%, 0%, 0.5);
   cursor: help;
@@ -103,7 +99,7 @@ hr {
   margin-top: 0;
   padding: 0;
   margin-bottom: calc(var(--space-4) - 1px);
-  background: hsla(0, 0%, 0%, 0.2);
+  background: hsla(0, 0%, 0%, 0.2); 
   border: none;
   height: 1px;
 }
