@@ -1,7 +1,9 @@
 import React from "react"
 import "./card.css"
 import { navigate } from "gatsby";
-
+import Grow from '@mui/material/Grow';
+import Slide from '@mui/material/Slide';
+import { Fade } from "@mui/material";
 class Card extends React.Component {
     constructor(props){
       super()
@@ -12,7 +14,8 @@ class Card extends React.Component {
     }
     styles = {}
    render(){
-      return <div role="select" className="card" onClick={this.handleClick} onKeyDown={this.handleClick}>
+      return <Fade in={true} direction="up" mountOnEnter unmountOnExit {...(true ? { timeout: this.props.index*100 } : {})}>
+      <div role="select" className="card" onClick={this.handleClick} onKeyDown={this.handleClick}>
       <div className="content">
         <div className="front">
           {this.props.card.ext_1}
@@ -29,6 +32,7 @@ class Card extends React.Component {
         </div>
       </div>
     </div>
+    </Fade>
     }
   }
   
