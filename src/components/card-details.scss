@@ -11,9 +11,21 @@
     margin-right: auto; 
 }
 
+
+.buttonsWrapper{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width:100%;
+    align-items: center;
+}
+
 .jishoLink{
     color:white;
-    position:absolute;
-    bottom:2%;
-    right:2%;
+    font-size:32pt;
+    width:60px;
 }
+
+.like{
+    color:white;
+}   
