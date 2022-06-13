@@ -5,6 +5,9 @@ import { navigate } from "gatsby";
 import { Paper } from "@mui/material";
 import Typography from '@mui/material/Typography';
 import SearchIcon from '@mui/icons-material/Search';
+import LikeButton from "./LikeButton"
+import { Box } from "@mui/material";
+
 class CardDetail extends React.Component {
   constructor(props){
     super()
@@ -44,9 +47,13 @@ class CardDetail extends React.Component {
     <Typography variant="" component="p">
     Related words : {this.state.card.ext_6}
     </Typography>
-    <Typography variant="" component="p">
-      <a target="_blank" rel="noreferrer" href={"https://jisho.org/search/%23kanji%20"+this.state.card.ext_1}><SearchIcon className='jishoLink'/></a>
-    </Typography>
+    <Box className="buttonsWrapper">
+    <LikeButton></LikeButton>
+
+      <Typography variant="" component="p">
+        <a target="_blank" rel="noreferrer" href={"https://jisho.org/search/%23kanji%20"+this.state.card.ext_1}><SearchIcon className='jishoLink'/></a>
+      </Typography>
+    </Box>
     </Paper>
   }
 }
