@@ -13,19 +13,24 @@
 
 
 .buttonsWrapper{
-    display:flex;
-    flex-direction: row;
-    justify-content: space-between;
     width:100%;
-    align-items: center;
+    display:inline;
 }
 
 .jishoLink{
+    width:60px;
+    float:right;
+    height:100%;
+    margin-right:2%;
+}
+
+.jishoLink a{
     color:white;
     font-size:32pt;
-    width:60px;
 }
 
 .like{
+    margin-left:2%;
+    float:left;
     color:white;
 }   
