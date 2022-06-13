@@ -4,6 +4,7 @@ import { useStaticQuery, graphql } from "gatsby"
 
 import Header from "./Header"
 import "./layout.scss"
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -15,9 +16,16 @@ const Layout = ({ children }) => {
       }
     }
   `)
-
+  const darkTheme = createTheme({
+    palette: {
+      mode: 'dark',
+    },
+  });
+  
+  
   return (
     <>
+      <ThemeProvider theme={darkTheme}>
       <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
       <div
         style={{
@@ -35,6 +43,7 @@ const Layout = ({ children }) => {
         >
         </footer>
       </div>
+      </ThemeProvider>
     </>
   )
 }
