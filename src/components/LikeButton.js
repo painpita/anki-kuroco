@@ -1,12 +1,50 @@
-import React from "react"
+import React, { useState, useEffect, Suspense} from "react"
 import "./like-button.scss"
-const LikeButton = () => {
+import axios from "../../authAxios"
+const LikeButton = (props) => {
 
-return ( <div className="like">
-  <input type="checkbox" id="checkbox" />
-  <label for="checkbox">
+  const [liked, setLiked] = useState(props.liked)
+  const [connected, setConnected] = useState(props.connected)
+
+  async function onChange(){
+    let body = {
+      "module_type": "topics",
+      "module_id": props.topic.card.topics_id,
+      "action_type": 0
+    }
+
+    let url = liked ? '6/unlike' : '6/like'
+    console.log(url)
+    console.log(liked)
+    try {
+      await axios({
+        method:'post',
+        url:url,
+        headers: {"Content-Type":"application/json"},
+        data: body,
+      })
+    }
+    catch(e){
+      console.log(e)
+      window.alert("Sorry, an error happened ")
+    }
+    setLiked(!liked)
+  }
+  useEffect(() => {
+    if(props.liked===true){
+      setLiked(props.liked)
+    }
+    if(props.connected===true){
+      setConnected(props.connected)
+    }
+}, [props.liked, props.connected]) // This will only run when one of those variables change
+
+if(connected){
+  return (<div className="like">
+  <input type="checkbox" id="checkbox" checked={liked} onChange={onChange}/>
+  <label htmlFor="checkbox">
     <svg id="heart-svg" viewBox="467 392 58 57" xmlns="http://www.w3.org/2000/svg">
-      <g id="Group" fill="none" fill-rule="evenodd" transform="translate(467 392)">
+      <g id="Group" fill="none" fillRule="evenodd" transform="translate(467 392)">
         <path d="M29.144 20.773c-.063-.13-4.227-8.67-11.44-2.59C7.63 28.795 28.94 43.256 29.143 43.394c.204-.138 21.513-14.6 11.44-25.213-7.214-6.08-11.377 2.46-11.44 2.59z" id="heart" fill="#AAB8C2"/>
         <circle id="main-circ" fill="#E2264D" opacity="0" cx="29.5" cy="29.5" r="1.5"/>
 
@@ -48,7 +86,9 @@ return ( <div className="like">
     </svg>
   </label>
 </div>
- )
+ ) 
+}
+ else return 
 }
 
 export default LikeButton
