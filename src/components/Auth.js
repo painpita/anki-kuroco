@@ -2,6 +2,7 @@ import React from "react"
 import { isLoggedIn } from "../services/auth"
 import Login from "./Login"
 import Logout from "./Logout"
+import {Paper} from "@mui/material"
 class Auth extends React.Component {
   constructor(props){
     super()
@@ -16,9 +17,11 @@ class Auth extends React.Component {
   }
 
   render(){
+    console.log("user : ")
     console.log(this.state.user)
-    if(this.state.user===null){
-      return <div
+    if((this.state.user==null)|(this.state.user==undefined)){
+      return <Paper className={"paper"}>
+      <div
     style={{
       display: "flex",
       flex: "1",
@@ -30,15 +33,16 @@ class Auth extends React.Component {
     <Login></Login>
 
   </div>
+  </Paper>
     }
     else{
       console.log(this.state.user)
-      return <> 
+      return <Paper className={"paper"}>
         <div>
           Logged in as : {this.state.user.email}
         </div>
         <Logout></Logout>
-      </>
+        </Paper>
     }
   }
 }
