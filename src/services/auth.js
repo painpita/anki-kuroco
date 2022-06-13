@@ -1,5 +1,5 @@
 import axios from "../../authAxios"
-
+import {navigate} from "gatsby"
 export var loggedUser = null
 
 export const isBrowser = () => typeof window !== "undefined"
@@ -50,6 +50,6 @@ export const isLoggedIn = async () => {
   }
   catch(e){
     console.log("error detected")
-    return null
+    navigate("/profile")
   }
 }
