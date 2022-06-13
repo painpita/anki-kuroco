@@ -33,8 +33,8 @@ class CardDisplayer extends React.Component {
       this.state
         .cards
           .map(
-            card=>
-              <Card key={card.topics_id} card={card} ></Card>
+            (card,index)=>
+              <Card key={card.topics_id} card={card} index={index}></Card>
           )
     const button = <Button style={{position:"absolute",right:"5%", bottom:"5%", fontSize:"xx-large", color:"#333"}} key="button" onClick={()=>this.componentDidMount()}><RefreshIcon/></Button>
     return <div>
