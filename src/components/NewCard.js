@@ -11,7 +11,16 @@ import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import authAxios from "../../authAxios"
 import Swal from 'sweetalert2';
 import { navigate } from "gatsby"
+import { isLoggedIn } from "../services/auth";
 const NewCard = ({props}) => {
+
+  try{
+    isLoggedIn()
+  }
+  catch{
+    navigate('/profile')
+  }
+
   const defaultValues = {
     kanji: "",
     meanings: "",
@@ -89,7 +98,7 @@ const NewCard = ({props}) => {
       <Typography component="h1" variant="">
         Create a new card 
       </Typography>
-      <ValidatorForm onSubmit={handleSubmit}>
+      <ValidatorForm className="newCardForm" onSubmit={handleSubmit}>
         <FormControl>
             <TextValidator
               className="kanjiInput" 
