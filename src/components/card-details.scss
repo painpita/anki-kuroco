@@ -1,5 +1,5 @@
 .paper{
-    background-color: black;
+    //background-color: black;
     color:white;
     text-align: center;
     height:50%;
@@ -14,23 +14,25 @@
 
 .buttonsWrapper{
     width:100%;
-    display:inline;
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+    height:10%;
 }
 
 .jishoLink{
-    width:60px;
-    float:right;
-    height:100%;
-    margin-right:2%;
+    text-align: center;
 }
 
 .jishoLink a{
     color:white;
-    font-size:32pt;
 }
 
 .like{
-    margin-left:2%;
-    float:left;
     color:white;
 }   
+
+
+.deleteButtonWrapper{
+    color:white;
+}
