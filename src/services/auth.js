@@ -56,7 +56,6 @@ export const isLoggedIn = async (props) => {
       const token = getAccessToken()
       setAccessTokenOnRequestHeader(token)
       const {data} = await axios.get('/6/profile')
-      console.log(data)
       setUser({
         email : data.email, 
         name1 : data.name1, 
