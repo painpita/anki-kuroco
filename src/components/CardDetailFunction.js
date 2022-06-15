@@ -69,7 +69,7 @@ const CardDetailFunction = (location) => {
     <Typography variant="" component="p" className='jishoLink'>
       <a target="_blank" rel="noreferrer" href={"https://jisho.org/search/%23kanji%20"+this.state.card.ext_1}><SearchIcon/></a>
     </Typography>
-    <Typography class="deleteButtonWrapper">
+    <Typography className="deleteButtonWrapper">
       {deleteButton}
     </Typography>
     </Box>
