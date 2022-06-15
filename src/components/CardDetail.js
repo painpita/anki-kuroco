@@ -36,8 +36,8 @@ class CardDetail extends React.Component {
       cardsReq = await axios.get("4/card-detail/"+this.props.topics_id)
       await this.setState({card:cardsReq.data.details})
     }
-    catch{
-      navigate("/profile")
+    catch(e){
+      console.log(e)
     }
     try{
       let favReq = await axios.get("6/fav")
@@ -49,7 +49,7 @@ class CardDetail extends React.Component {
 
     }
     catch(e){
-      console.log(e)
+      navigate("/profile")
     }
   }
   
@@ -82,10 +82,10 @@ class CardDetail extends React.Component {
           <SearchIcon/>
         </a>
       </Typography>
-      <Typography variant="" component="div" class="likeButtonWrapper">
+      <Typography variant="" component="div" className="likeButtonWrapper">
         <LikeButton connected={this.state.connected} liked={this.state.liked} topic={this.state}></LikeButton>
       </Typography>
-      <Typography variant="" component="div" class="deleteButtonWrapper">
+      <Typography variant="" component="div" className="deleteButtonWrapper">
         {deleteButton}
       </Typography>
     </Box>
