@@ -8,6 +8,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import LikeButton from "./LikeButton"
 import { Box } from "@mui/material";
 import {Button} from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
 class CardDetail extends React.Component {
   constructor(props){
     super()
@@ -18,10 +19,21 @@ class CardDetail extends React.Component {
     }
   }
 
+   deleteThisCard = async () => {
+    try{
+      await axios.post("6/card-delete/"+this.props.topics_id)
+      navigate("/my-cards")
+    }
+    catch(e){
+      console.log(e)
+      navigate("/profile")
+    }
+  }
+
   async componentDidMount(){
     let cardsReq = null;
     try{
-      cardsReq = await axios.get("/4/card-detail/"+this.props.topics_id)
+      cardsReq = await axios.get("4/card-detail/"+this.props.topics_id)
       await this.setState({card:cardsReq.data.details})
     }
     catch{
@@ -31,7 +43,6 @@ class CardDetail extends React.Component {
       let favReq = await axios.get("6/fav")
       let myLikes = favReq.data.list.map(like=>like.module_id)
       if(myLikes.includes(cardsReq.data.details.topics_id)){
-        console.log("i have liked this card")
         this.setState({liked:true})
       }
       this.setState({connected:true})
@@ -43,6 +54,7 @@ class CardDetail extends React.Component {
   }
   
   render(){
+    let deleteButton = (this.props.myCard ? <Button className="deleteButtonWrapper" onClick={this.deleteThisCard.bind()}><DeleteIcon/></Button> : <></>)
     return <Paper className={"paper"}
       sx={{
         backgroundColor:'black',
@@ -65,10 +77,17 @@ class CardDetail extends React.Component {
     Related words : {this.state.card.ext_6}
     </Typography>
     <Box className="buttonsWrapper">
-    <LikeButton connected={this.state.connected} liked={this.state.liked} topic={this.state}></LikeButton>
-    <Typography variant="" component="p" className='jishoLink'>
-      <a target="_blank" rel="noreferrer" href={"https://jisho.org/search/%23kanji%20"+this.state.card.ext_1}><SearchIcon/></a>
-    </Typography>
+      <Typography variant="" component="div" className='jishoLink'>
+        <a target="_blank" rel="noreferrer" href={"https://jisho.org/search/%23kanji%20"+this.state.card.ext_1}>
+          <SearchIcon/>
+        </a>
+      </Typography>
+      <Typography variant="" component="div" class="likeButtonWrapper">
+        <LikeButton connected={this.state.connected} liked={this.state.liked} topic={this.state}></LikeButton>
+      </Typography>
+      <Typography variant="" component="div" class="deleteButtonWrapper">
+        {deleteButton}
+      </Typography>
     </Box>
     </Paper>
   }

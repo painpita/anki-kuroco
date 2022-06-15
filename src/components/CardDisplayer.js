@@ -2,9 +2,9 @@ import React from "react"
 import axios from "../../authAxios"
 import Card from "./Card"
 import "./card-displayer.scss"
-import { navigate } from "gatsby";
 import Button from "@mui/material/Button";
 import RefreshIcon from '@mui/icons-material/Refresh';
+import {isLoggedIn} from "../services/auth"
 class CardDisplayer extends React.Component {
   data;
   constructor(props){
@@ -16,13 +16,24 @@ class CardDisplayer extends React.Component {
   async componentDidMount(){
     let cardsReq = null
     let cards = []
+    let url = ""
     try{
-      if(this.props.myCards) cardsReq = await axios.get("/6/my-cards?cnt="+this.props.numberOfCards)
-      else cardsReq = await axios.get("/4/random-cards?cnt="+this.props.numberOfCards)
-      cards = cardsReq.data.list
+      switch(this.props.mode){
+        case("my-cards"): 
+          url = "/6/my-cards?cnt="; 
+          break;
+        case("favorites"): 
+          url = "/6/get-fav?cnt="; 
+          break;
+        default: 
+          url = "/4/random-cards?cnt=";
+        }
+        cardsReq = await axios.get(url+this.props.numberOfCards)
+        cards = cardsReq.data.list
     }
     catch{
-      navigate("/profile")
+      isLoggedIn()
+      this.componentDidMount()
     }
 
     this.setState({ cards : await cards })
@@ -34,7 +45,7 @@ class CardDisplayer extends React.Component {
         .cards
           .map(
             (card,index)=>
-              <Card key={card.topics_id} card={card} index={index}></Card>
+              <Card myCard={this.props.mode==="my-cards"} key={card.topics_id} card={card} index={index}></Card>
           )
     const button = <Button style={{position:"absolute",right:"5%", bottom:"5%", fontSize:"xx-large", color:"#333"}} key="button" onClick={()=>this.componentDidMount()}><RefreshIcon/></Button>
     return <div>

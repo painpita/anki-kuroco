@@ -45,6 +45,17 @@ const Header = ({ siteTitle }) => (
       >
         New card
       </Link>
+      <Link
+        to="/favorites"
+        style={{
+          marginRight:"20px",
+
+          fontSize: `var(--font-sm)`,
+          textDecoration: `none`,
+        }}
+      >
+        My favorites
+      </Link>
     </span>
     
     <span className="link-group link-group-right">

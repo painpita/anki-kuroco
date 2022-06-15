@@ -14,7 +14,7 @@ import { navigate } from "gatsby"
 import { isLoggedIn } from "../services/auth";
 import { Grow } from "@mui/material"
 import Slide from '@mui/material/Slide';
-const NewCard = ({props}) => {
+const NewCardAuto = ({props}) => {
 
   try{
     isLoggedIn()
@@ -43,20 +43,17 @@ const NewCard = ({props}) => {
       "open_flg": 1,
       "ymd": "2022-06-13",
       "ext_1": formValues.kanji,
-      "ext_2": formValues.meanings,
-      "ext_3": formValues.on,
-      "ext_4": formValues.kun,
       "ext_5": "",
       "ext_6": "",
-      "contents_type": formValues.level,
       "validate_only": false
     }
     try{
       let req = await authAxios({
       method:"post",
-      url :"6/new",
+      url :"6/auto-card",
       //headers: {'Content-Type' : 'application/json'},
       data: body})
+      console.log(req)
       let result = await  Swal.fire({
         title: 'おめでとうございます。!',
         text: 'Your new card has been created',
@@ -92,7 +89,8 @@ const NewCard = ({props}) => {
       [name]: value,
     });
   };
-  return (<Paper className={"newCard"}
+  return (
+  <Paper className={"newCard"}
     sx={{
         color:"white",
       }}
@@ -100,7 +98,7 @@ const NewCard = ({props}) => {
       
       <ValidatorForm className="newCardForm" onSubmit={handleSubmit}>
       <Typography component="h1" variant="">
-        Create a new card 
+        Automatically create a new card 
       </Typography>
         <FormControl>
             <TextValidator
@@ -114,73 +112,7 @@ const NewCard = ({props}) => {
               value={formValues.kanji}
               onChange={handleInputChange}
             />
-            <TextField 
-              multiline 
-              className="kanjiInput" 
-              label="Meanings" 
-              type="text"
-              name="meanings"
-              variant="outlined"
-              value={formValues.meanings}
-              onChange={handleInputChange}
-            />
-            <div className="meaningInputsWrapper">
-              <TextField 
-                multiline 
-                className="kanjiInput" 
-                label="On" 
-                type="text"
-                name="on"
-                variant="outlined" 
-                value={formValues.on}
-                onChange={handleInputChange}
-              />
-              <TextField 
-                multiline 
-                className="kanjiInput" 
-                label="Kun" 
-                type="text"
-                name="kun"
-                variant="outlined" 
-                value={formValues.kun}
-                onChange={handleInputChange}
-              />
-            </div>
         </FormControl>
-        <div className="sliderWrapper">
-        Difficulty level
-        <Slider
-          value={formValues.level}
-          onChange={handleSliderChange("level")}
-          defaultValue={16}
-          step={1}
-          min={16}
-          max={20}
-          marks={[
-            {
-              value: 16,
-              label: "1",
-            },
-            {
-              value: 17,
-              label: "2",
-            },
-            {
-              value: 18,
-              label: "3",
-            },
-            {
-              value: 19,
-              label: "4",
-            },
-            {
-              value: 20,
-              label: "5",
-            },
-          ]}
-          valueLabelDisplay="off"
-          />
-        </div>
         <Button type="submit" className="newKanjiButton">
           Save
         </Button>
@@ -190,4 +122,4 @@ const NewCard = ({props}) => {
 } 
 
 
-export default NewCard
+export default NewCardAuto

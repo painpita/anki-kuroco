@@ -1,0 +1,21 @@
+.newCardContainer{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    height:100%;
+    width:100%;
+}
+
+.newCard{
+    //background-color: black;
+    color:white;
+    text-align: center;
+    height:700px;
+    display:inline;
+    width:80%;
+}
+
+.cardSelector{
+    color:white;
+}

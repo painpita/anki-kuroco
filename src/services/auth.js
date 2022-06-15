@@ -1,7 +1,6 @@
 import axios from "../../authAxios"
 import {navigate} from "gatsby"
 export var loggedUser = null
-
 export const isBrowser = () => typeof window !== "undefined"
 
 export const getUser = () =>
@@ -11,7 +10,15 @@ export const getUser = () =>
 
 const setUser = user => {
   window.localStorage.setItem("gatsbyUser", JSON.stringify(user))
-  loggedUser=JSON.stringify(user)
+}
+
+export const getAccessToken = () =>
+isBrowser() && window.localStorage.getItem("accessToken")
+  ? JSON.parse(window.localStorage.getItem("accessToken"))
+  : {}
+
+const saveAccessToken = token => {
+  window.localStorage.setItem("accessToken", JSON.stringify(token))
 }
 
 const setAccessTokenOnRequestHeader = (rcmsApiAccessToken) => {
@@ -24,21 +31,30 @@ export const handleLogin = async ({ email, password }) => {
     const {data:{grant_token}} = await axios.post("/6/login",{email,password})
     const {data:{access_token}} = await axios.post("/6/token",{grant_token})
     setUser({username:email})
+    saveAccessToken(access_token)
     setAccessTokenOnRequestHeader(access_token)
 }
 
 export const handleLogout = async () => {
-  console.log("got in here")
   try{
     await axios.post("/6/logout")
   }
   catch{}
   setUser(null)
+  saveAccessToken(null)
+
   setAccessTokenOnRequestHeader({rcmsApiAccessToken:null})
 }
 
-export const isLoggedIn = async () => {
+export const regenerateHttpClient = () => {
+  let token = getAccessToken()
+  setAccessTokenOnRequestHeader(token)
+}
+
+export const isLoggedIn = async (props) => {
   try{
+      const token = getAccessToken()
+      setAccessTokenOnRequestHeader(token)
       const {data} = await axios.get('/6/profile')
       setUser({
         email : data.email, 
