@@ -2,7 +2,7 @@ import React from "react"
 import { isLoggedIn } from "../services/auth"
 import Login from "./Login"
 import Logout from "./Logout"
-import {Paper} from "@mui/material"
+import {Paper, Typography} from "@mui/material"
 class Auth extends React.Component {
   constructor(props){
     super()
@@ -13,11 +13,10 @@ class Auth extends React.Component {
   
   async componentDidMount(){
       let user = await isLoggedIn()
-      this.setState({user})
+      this.setState(await {user})
   }
 
   render(){
-    console.log("user : ")
     console.log(this.state.user)
     if((this.state.user==null)|(this.state.user==undefined)){
       return <Paper className={"paper"}>
@@ -29,19 +28,16 @@ class Auth extends React.Component {
       borderBottom: "1px solid #d1c1e0",
     }}
   >
-    <span>You are not logged in</span>
     <Login></Login>
 
   </div>
   </Paper>
     }
     else{
-      console.log(this.state.user)
       return <Paper className={"paper"}>
-        <div>
-          Logged in as : {this.state.user.email}
+        <div className="logoutCard">
+          <Logout user={this.state.user}></Logout>
         </div>
-        <Logout></Logout>
         </Paper>
     }
   }
