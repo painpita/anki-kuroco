@@ -63,8 +63,9 @@ const NewCard = ({props}) => {
         icon: 'success',
         confirmButtonText: "Let's check it out !"
       })
+      console.log(req)
       console.log(req.data.id)
-      navigate('/card_details/'+req.data.id)
+      navigate('/card_details/'+req.data.id, {state:{myCards:true, topics_id:req.data.id}})
     }
     catch(e){
       Swal.fire({
