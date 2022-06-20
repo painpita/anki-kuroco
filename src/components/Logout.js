@@ -32,7 +32,7 @@ const Logout = (props) => {
         event.preventDefault()
         console.log("logging you out")
         await handleLogout()
-        navigate('/')
+        navigate(locale)
     }
 
         return(<>

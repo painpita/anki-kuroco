@@ -42,7 +42,7 @@ const CardDetail = (props) =>{
   
       }
       catch(e){
-        navigate("/profile")
+        //navigate("/profile")
       }
     }
 

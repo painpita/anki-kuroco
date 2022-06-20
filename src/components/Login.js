@@ -35,7 +35,7 @@ const Login = (props) =>{
       loginInfo.message=e
       return
     }
-    navigate('/')
+    navigate(locale)
   }
 
     return (
