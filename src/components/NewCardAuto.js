@@ -1,10 +1,8 @@
 import React from "react"
 import { Paper } from "@mui/material";
 import "./new-card.scss"
-import TextField from '@mui/material/TextField';
 import { FormControl } from '@mui/material';
 import { useState } from "react";
-import {Slider} from "@mui/material";
 import { Button }  from "@mui/material";
 import { Typography } from "@mui/material";
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
@@ -12,10 +10,12 @@ import authAxios from "../../authAxios"
 import Swal from 'sweetalert2';
 import { navigate } from "gatsby"
 import { isLoggedIn } from "../services/auth";
-import { Grow } from "@mui/material"
-import Slide from '@mui/material/Slide';
-const NewCardAuto = ({props}) => {
+import { useIntl } from "gatsby-plugin-intl";
 
+const NewCardAuto = ({props}) => {
+  const intl = useIntl()
+  // Use language iso for the routes
+  const locale = intl.locale !== "en" ? `/${intl.locale}` : ""
   try{
     isLoggedIn()
   }
@@ -55,10 +55,10 @@ const NewCardAuto = ({props}) => {
       data: body})
       console.log(req)
       let result = await  Swal.fire({
-        title: 'おめでとうございます。!',
-        text: 'Your new card has been created',
+        title: intl.formatMessage({ id: "congratulations" }),
+        text: intl.formatMessage({ id: "new_card_created" }),
         icon: 'success',
-        confirmButtonText: "Let's check it out !"
+        confirmButtonText: intl.formatMessage({ id: "check_it_out" })
       })
       console.log(req.data.id)
       navigate('/card_details/'+req.data.id, {state:{myCards:true, topics_id:req.data.id}})
@@ -98,7 +98,7 @@ const NewCardAuto = ({props}) => {
       
       <ValidatorForm className="newCardForm" onSubmit={handleSubmit}>
       <Typography component="h1" variant="">
-        Automatically create a new card 
+      {intl.formatMessage({ id: "create_new_automatic" })}
       </Typography>
         <FormControl>
             <TextValidator
@@ -114,7 +114,7 @@ const NewCardAuto = ({props}) => {
             />
         </FormControl>
         <Button type="submit" className="newKanjiButton">
-          Save
+          {intl.formatMessage({ id: "save" })}
         </Button>
         </ValidatorForm >
       </Paper>
