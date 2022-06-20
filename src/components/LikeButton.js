@@ -9,13 +9,11 @@ const LikeButton = (props) => {
   async function onChange(){
     let body = {
       "module_type": "topics",
-      "module_id": props.topic.card.topics_id,
+      "module_id": props.topic.topics_id,
       "action_type": 0
     }
 
     let url = liked ? '6/unlike' : '6/like'
-    console.log(url)
-    console.log(liked)
     try {
       await axios({
         method:'post',
