@@ -3,7 +3,7 @@ module.exports = {
         title: "KuroKanji",
         author: "dimitri@diverta.co",
     },
-    
+    trailingSlash:"always",
     plugins: [`gatsby-plugin-sass`,
     {
         resolve: 'gatsby-plugin-manifest',
