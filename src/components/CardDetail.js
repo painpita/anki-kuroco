@@ -20,11 +20,13 @@ const CardDetail = (props) =>{
   const [card, setCard] = useState({})
   const [connected, setConnected] = useState(false)
   const locale = props.locale
+  console.log(locale)
   useEffect(()=>{
     const getCard = async () =>{
       let cardsReq = null;
       try{
-        cardsReq = await axios.get("4/card-detail/"+props.topics_id)
+        //we remove the first / in locale
+        cardsReq = await axios.get("4/card-detail/"+props.topics_id+"?_lang="+locale.slice(1))
         await setCard(cardsReq.data.details)
       }
       catch(e){
