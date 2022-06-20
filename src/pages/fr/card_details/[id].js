@@ -1,6 +1,6 @@
 import React from "react"
-import Layout from "../../components/Layout"
-import CardDetail from "../../components/CardDetail"
+import Layout from "../../../components/Layout"
+import CardDetail from "../../../components/CardDetail"
 const cardDetail = (location) => {
   console.log(location)
   return <div>
