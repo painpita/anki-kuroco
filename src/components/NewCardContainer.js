@@ -4,9 +4,7 @@ import React from "react"
 import { useState } from "react"
 import { Button } from "@mui/material"
 import "./new-card-container.scss"
-import { useEffect } from "react"
 import { ArrowCircleLeft, ArrowCircleRight, ArrowRightCircle } from "@mui/icons-material"
-import { Fade } from '@mui/material/';
 const NewCardContainer = (  ) => {
 
     const [auto,setAuto] = useState(false)

@@ -1,25 +1,23 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { isLoggedIn } from "../services/auth"
 import Login from "./Login"
 import Logout from "./Logout"
 import {Paper, Typography} from "@mui/material"
-class Auth extends React.Component {
-  constructor(props){
-    super()
-    this.state = {
-      user: null,
-    }
+import { useIntl } from "gatsby-plugin-intl";
+import { useState } from "react"
+const Auth = (props) =>{
+  const intl = useIntl()
+  // Use language iso for the routes
+  const locale = intl.locale !== "en" ? `/${intl.locale}` : ""
+  const [user, setUser] = useState(null)
+  async function getUser(){
+    const getUser = await isLoggedIn({locale:locale})
+    setUser(getUser)
   }
-  
-  async componentDidMount(){
-      let user = await isLoggedIn()
-      this.setState(await {user})
-  }
-
-  render(){
-    console.log(this.state.user)
-    if((this.state.user==null)|(this.state.user==undefined)){
-      return <Paper className={"paper"}>
+  getUser()
+    
+    if((user==null)|(user==undefined)){
+      return(<Paper className={"paper"}>
       <div
     style={{
       display: "flex",
@@ -31,16 +29,15 @@ class Auth extends React.Component {
     <Login></Login>
 
   </div>
-  </Paper>
+  </Paper>)
     }
     else{
-      return <Paper className={"paper"}>
+      return (<Paper className={"paper"}>
         <div className="logoutCard">
-          <Logout user={this.state.user}></Logout>
+          <Logout user={user}></Logout>
         </div>
-        </Paper>
+        </Paper>)
     }
-  }
 }
 
 export default Auth

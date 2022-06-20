@@ -1,7 +1,9 @@
 import axios from "../../authAxios"
 import {navigate} from "gatsby"
+
 export var loggedUser = null
 export const isBrowser = () => typeof window !== "undefined"
+
 
 export const getUser = () =>
   isBrowser() && window.localStorage.getItem("gatsbyUser")
@@ -66,7 +68,7 @@ export const isLoggedIn = async (props) => {
       return user
   }
   catch(e){
-    console.log("error detected")
-    navigate("/profile")
+    // Use language iso for the routes
+    return null
   }
 }

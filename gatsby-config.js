@@ -3,20 +3,12 @@ module.exports = {
         title: "KuroKanji",
         author: "dimitri@diverta.co",
     },
+    
     plugins: [`gatsby-plugin-sass`,
     {
         resolve: 'gatsby-plugin-manifest',
         options: {
           icon: 'src/favicon.png',
-        },
-      },
-      {
-        resolve: `gatsby-plugin-i18n`,
-        options: {
-          langKeyDefault: 'en',
-          langKeyForNull: 'en',
-          prefixDefault: false,
-          useLangKeyLayout: false,
         },
       },
       {
@@ -27,5 +19,18 @@ module.exports = {
         },
       },
       `gatsby-transformer-remark`,
+      {
+        resolve: `gatsby-plugin-intl`,
+        options: {
+          // Directory with the strings JSON
+          path: `${__dirname}/src/intl`,
+          // Supported languages
+          languages: [`en`, `fr`, `jp`],
+          // Default site language
+          defaultLanguage: `en`,
+          // Redirects to `/en` in the route `/`
+          redirect: false,
+        },
+      },
 ],
 }
