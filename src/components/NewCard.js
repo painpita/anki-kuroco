@@ -12,10 +12,12 @@ import authAxios from "../../authAxios"
 import Swal from 'sweetalert2';
 import { navigate } from "gatsby"
 import { isLoggedIn } from "../services/auth";
-import { Grow } from "@mui/material"
-import Slide from '@mui/material/Slide';
-const NewCard = ({props}) => {
+import { useIntl } from "gatsby-plugin-intl";
 
+const NewCard = ({props}) => {
+  const intl = useIntl()
+  // Use language iso for the routes
+  const locale = intl.locale !== "en" ? `/${intl.locale}` : ""
   try{
     isLoggedIn()
   }
@@ -36,7 +38,6 @@ const NewCard = ({props}) => {
     let body = {
       "subject": formValues.kanji,
       "slug": "",
-      "contents_type": 15,
       "topics_flg": 1,
       "contents": "azeaze",
       "regular_flg": 0,
@@ -58,10 +59,10 @@ const NewCard = ({props}) => {
       //headers: {'Content-Type' : 'application/json'},
       data: body})
       let result = await  Swal.fire({
-        title: 'おめでとうございます。!',
-        text: 'Your new card has been created',
+        title: intl.formatMessage({ id: "congratulations" }),
+        text: intl.formatMessage({ id: "new_card_created" }),
         icon: 'success',
-        confirmButtonText: "Let's check it out !"
+        confirmButtonText: intl.formatMessage({ id: "check_it_out" })
       })
       console.log(req.data.id)
       navigate('/card_details/'+req.data.id, {state:{myCards:true, topics_id:req.data.id}})
@@ -100,7 +101,8 @@ const NewCard = ({props}) => {
       
       <ValidatorForm className="newCardForm" onSubmit={handleSubmit}>
       <Typography component="h1" variant="">
-        Create a new card 
+      {intl.formatMessage({ id: "create_new" })}
+
       </Typography>
         <FormControl>
             <TextValidator
@@ -117,7 +119,7 @@ const NewCard = ({props}) => {
             <TextField 
               multiline 
               className="kanjiInput" 
-              label="Meanings" 
+              label={intl.formatMessage({ id: "difficulty_level" })}
               type="text"
               name="meanings"
               variant="outlined"
@@ -148,7 +150,7 @@ const NewCard = ({props}) => {
             </div>
         </FormControl>
         <div className="sliderWrapper">
-        Difficulty level
+        {intl.formatMessage({ id: "difficulty_level" })}
         <Slider
           value={formValues.level}
           onChange={handleSliderChange("level")}
@@ -182,7 +184,7 @@ const NewCard = ({props}) => {
           />
         </div>
         <Button type="submit" className="newKanjiButton">
-          Save
+          {intl.formatMessage({ id: "save" })}
         </Button>
         </ValidatorForm >
       </Paper>
