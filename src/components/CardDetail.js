@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import axios from "../../authAxios"
 import "./card-details.scss"
 import { navigate } from "gatsby";
@@ -9,19 +9,49 @@ import LikeButton from "./LikeButton"
 import { Box } from "@mui/material";
 import {Button} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
-class CardDetail extends React.Component {
-  constructor(props){
-    super()
-    this.state = {
-        liked:false,
-        card:{},
-        connected : false
-    }
-  }
+import { useIntl } from "gatsby-plugin-intl";
+import { useState } from "react"
 
-   deleteThisCard = async () => {
+const CardDetail = (props) =>{
+  const intl = useIntl()
+  // Use language iso for the routes
+  console.log(props)
+  const [liked, setLiked] = useState(false)
+  const [card, setCard] = useState({})
+  const [connected, setConnected] = useState(false)
+  const locale = props.locale
+  useEffect(()=>{
+    const getCard = async () =>{
+      let cardsReq = null;
+      try{
+        cardsReq = await axios.get("4/card-detail/"+props.topics_id)
+        await setCard(cardsReq.data.details)
+      }
+      catch(e){
+        console.log(e)
+      }
+      try{
+        let favReq = await axios.get("6/fav")
+        let myLikes = favReq.data.list.map(like=>like.module_id)
+        if(myLikes.includes(cardsReq.data.details.topics_id)){
+          setLiked(true)
+        }
+        setConnected(true)
+  
+      }
+      catch(e){
+        navigate("/profile")
+      }
+    }
+
+    getCard()
+
+  }, [props])
+
+
+  const deleteThisCard = async () => {
     try{
-      await axios.post("6/card-delete/"+this.props.topics_id)
+      await axios.post("6/card-delete/"+props.topics_id)
       navigate("/my-cards")
     }
     catch(e){
@@ -30,67 +60,45 @@ class CardDetail extends React.Component {
     }
   }
 
-  async componentDidMount(){
-    let cardsReq = null;
-    try{
-      cardsReq = await axios.get("4/card-detail/"+this.props.topics_id)
-      await this.setState({card:cardsReq.data.details})
-    }
-    catch(e){
-      console.log(e)
-    }
-    try{
-      let favReq = await axios.get("6/fav")
-      let myLikes = favReq.data.list.map(like=>like.module_id)
-      if(myLikes.includes(cardsReq.data.details.topics_id)){
-        this.setState({liked:true})
-      }
-      this.setState({connected:true})
+  let deleteButton = (props.myCard ? <Button className="deleteButtonWrapper" onClick={deleteThisCard.bind()}><DeleteIcon/></Button> : <></>)
 
-    }
-    catch(e){
-      navigate("/profile")
-    }
-  }
-  
-  render(){
-    let deleteButton = (this.props.myCard ? <Button className="deleteButtonWrapper" onClick={this.deleteThisCard.bind()}><DeleteIcon/></Button> : <></>)
-    return <Paper className={"paper"}
+  return(<Paper className={"paper"}
       sx={{
         backgroundColor:'black',
         color:'white'
       }}
     elevation={8}>
     <Typography variant="" component="h1">
-    {this.state.card.ext_1}
+    {card.ext_1}
     </Typography>
     <Typography variant="" component="h2">
-    Meanings : {this.state.card.ext_2}
+    {intl.formatMessage({ id: "meanings" })} : {card.ext_2}
     </Typography>
     <Typography variant="" component="p">
-    Onyomi readings : {this.state.card.ext_3}
+    {intl.formatMessage({ id: "onyomi_readings" })}{card.ext_3}
     </Typography>
     <Typography variant="" component="p">
-    Kunyumi readings : {this.state.card.ext_4}
+    {intl.formatMessage({ id: "kunyomi_readings" })} {card.ext_4}
     </Typography>
     <Typography variant="" component="p">
-    Related words : {this.state.card.ext_6}
+    {intl.formatMessage({ id: "related_words" })} {card.ext_6}
     </Typography>
     <Box className="buttonsWrapper">
       <Typography variant="" component="div" className='jishoLink'>
-        <a target="_blank" rel="noreferrer" href={"https://jisho.org/search/%23kanji%20"+this.state.card.ext_1}>
+        <a target="_blank" rel="noreferrer" href={"https://jisho.org/search/%23kanji%20"+card.ext_1}>
           <SearchIcon/>
         </a>
       </Typography>
       <Typography variant="" component="div" className="likeButtonWrapper">
-        <LikeButton connected={this.state.connected} liked={this.state.liked} topic={this.state}></LikeButton>
+        <LikeButton connected={connected} liked={liked} topic={card}></LikeButton>
       </Typography>
       <Typography variant="" component="div" className="deleteButtonWrapper">
         {deleteButton}
       </Typography>
     </Box>
     </Paper>
-  }
+  )
 }
+
 
 export default CardDetail

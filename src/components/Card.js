@@ -2,36 +2,36 @@ import React from "react"
 import "./card.scss"
 import { navigate } from "gatsby";
 import { Fade } from "@mui/material";
-class Card extends React.Component {
-    constructor(props){
-      super()
-    }
+import { useIntl } from "gatsby-plugin-intl";
+import { LocalSeeTwoTone } from "@mui/icons-material";
+const Card = (props) => {
+    const intl = useIntl()
+    // Use language iso for the routes
+    const locale = intl.locale !== "en" ? `/${intl.locale}` : ""
 
-    handleClick = () => {
-      navigate('/card_details/'+this.props.card.topics_id, {state:{myCard:this.props.myCard,topics_id:this.props.card.topics_id}})
+    const handleClick = () => {
+      navigate('/card_details/'+props.card.subject, {state:{myCard:props.myCard,topics_id:props.card.topics_id,locale:locale}})
     }
-    styles = {}
-   render(){
-      return <Fade in={true} direction="up" mountOnEnter unmountOnExit {...(true ? { timeout: this.props.index*200 } : {})}>
-      <div role="command" className="card" onClick={this.handleClick} onKeyDown={this.handleClick}>
+      return(<Fade in={true} direction="up" mountOnEnter unmountOnExit {...(true ? { timeout: props.index*200 } : {})}>
+      <div role="command" className="card" onClick={handleClick} onKeyDown={handleClick}>
       <div className="content">
         <div className="front">
-          {this.props.card.ext_1}
+          {props.card.ext_1}
         </div>
         <div className="back">
           <div className="meanings">
-          {this.props.card.ext_2.split("\n").join("· ")}
+          {props.card.ext_2.split("\n").join("· ")}
           </div>
           <div className="pronunciations">
-            {this.props.card.ext_3.split("\n").join("· ")}
+            {props.card.ext_3.split("\n").join("· ")}
             <br></br>
-            {this.props.card.ext_4.split("\n").join("· ")}
+            {props.card.ext_4.split("\n").join("· ")}
           </div>
         </div>
       </div>
     </div>
     </Fade>
-    }
+    )
   }
   
   export default Card
