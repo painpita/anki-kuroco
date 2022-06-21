@@ -3,10 +3,9 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { navigate } from "gatsby";
-import { useIntl } from "gatsby-plugin-intl";
-import { Link } from "gatsby";
+import { Link, useI18next } from "gatsby-plugin-react-i18next";
 import ReactCountryFlag from "react-country-flag"
-
+import { translate } from "react-i18next"
 import {
     IconFlagUK,
     IconFlagFR
@@ -14,33 +13,32 @@ import {
   
 const LanguageSelector = () => {
 
-  const intl = useIntl()
   // Use language iso for the routes
-  const locale = intl.locale !== "en" ? `/${intl.locale}` : "/"
-
+    const t = useI18next()
     const handleChange = (event) =>{
       event.preventDefault()
-      console.log(event.target.value)
-      navigate(locale)
+      navigate("/")
     }
+    const {languages, changeLanguage} = useI18next();
+
+    const handleChangeLanguage = (e) => {
+      console.log("current language : " + t.language)
+      console.log("changing language : " +e.target.value)
+      changeLanguage(e.target.value, t.originalPath)
+    }
+  
     return (
         <FormControl variant="standard">
         <Select
           labelId="demo-simple-select-standard-label"
           id="demo-simple-select-standard"
           label="Language"
-          defaultValue={locale}
-          onClose = {()=>{}}
+          defaultValue={t.language}
+          onChange= {handleChangeLanguage}
         >
-          <Link value="/" to='/' style={{ textDecoration: 'none' }}>
-            <MenuItem value="/"> <ReactCountryFlag countryCode="GB" /></MenuItem>
-          </Link>
-          <Link value="/fr" to='/fr' style={{ textDecoration: 'none' }}>
-            <MenuItem><ReactCountryFlag countryCode="FR" /></MenuItem>
-          </Link>
-          <Link value="/jp" to='/jp' style={{ textDecoration: 'none' }}>
-            <MenuItem><ReactCountryFlag countryCode="JP" /></MenuItem>
-          </Link>
+            <MenuItem value="en"> <ReactCountryFlag countryCode="GB" /></MenuItem>
+            <MenuItem value="fr"><ReactCountryFlag countryCode="FR" /></MenuItem>
+            <MenuItem value="jp"><ReactCountryFlag countryCode="JP" /></MenuItem>
         </Select>
       </FormControl>
     )

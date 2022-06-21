@@ -10,12 +10,12 @@ import authAxios from "../../authAxios"
 import Swal from 'sweetalert2';
 import { navigate } from "gatsby"
 import { isLoggedIn } from "../services/auth";
-import { useIntl } from "gatsby-plugin-intl";
+import {Trans, useI18next} from 'gatsby-plugin-react-i18next';
 
 const NewCardAuto = ({props}) => {
-  const intl = useIntl()
+
+  const {t} = useI18next()
   // Use language iso for the routes
-  const locale = intl.locale !== "en" ? `/${intl.locale}` : ""
   try{
     isLoggedIn()
   }
@@ -55,12 +55,11 @@ const NewCardAuto = ({props}) => {
       data: body})
       console.log(req)
       let result = await  Swal.fire({
-        title: intl.formatMessage({ id: "congratulations" }),
-        text: intl.formatMessage({ id: "new_card_created" }),
+        title: t('congratulations'),
+        text: t('new_card_created'),
         icon: 'success',
-        confirmButtonText: intl.formatMessage({ id: "check_it_out" })
+        confirmButtonText:  t('check_it_out')
       })
-      console.log(req.data.id)
       navigate('/card_details/'+req.data.id, {state:{myCards:true, topics_id:req.data.id}})
     }
     catch(e){
@@ -98,7 +97,7 @@ const NewCardAuto = ({props}) => {
       
       <ValidatorForm className="newCardForm" onSubmit={handleSubmit}>
       <Typography component="h1" variant="">
-      {intl.formatMessage({ id: "create_new_automatic" })}
+      <Trans>create_new_automatic</Trans>
       </Typography>
         <FormControl>
             <TextValidator
@@ -114,7 +113,7 @@ const NewCardAuto = ({props}) => {
             />
         </FormControl>
         <Button type="submit" className="newKanjiButton">
-          {intl.formatMessage({ id: "save" })}
+          <Trans>save</Trans>
         </Button>
         </ValidatorForm >
       </Paper>

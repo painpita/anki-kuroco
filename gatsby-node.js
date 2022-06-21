@@ -1,3 +1,13 @@
+const fs = require("fs-extra")
+const path = require("path")
+exports.onPostBuild = () => {
+  console.log("Copying locales")
+  fs.copySync(
+    path.join(__dirname, "/src/locales"),
+    path.join(__dirname, "/public/locales")
+  )
+}
+
 exports.createPages = async ({ actions }) => {
     // Use language iso for the routes
     //const locale = intl.locale !== "en" ? `/${intl.locale}` : ""
@@ -15,17 +25,3 @@ exports.createPages = async ({ actions }) => {
     })
   }
   
-
-exports.onCreatePage = ({ page, actions }) => {
-    const { createPage, deletePage} = actions
-    // notice the addition of .*
-    const reg = new RegExp('\/(.*)\/(card_details)\/.*')
-    if (page.path.match(reg)){
-      deletePage(page)
-      console.log(page.path.match(reg))
-      // notice page.context.language
-      page.path = `/card_details/`
-      page.matchPath = `/card_details/:id`
-      createPage(page)
-    }
-  }

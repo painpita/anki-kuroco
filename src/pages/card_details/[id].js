@@ -1,6 +1,8 @@
 import React from "react"
 import Layout from "../../components/Layout"
 import CardDetail from "../../components/CardDetail"
+import {graphql} from "gatsby"
+
 const cardDetail = (location) => {
   console.log(location)
   if(typeof window!=="undefined"){
@@ -12,4 +14,18 @@ const cardDetail = (location) => {
   }
   else return
 }
+
+export const query = graphql`
+query($language: String!) {
+  locales: allLocale(filter: {language: {eq: $language}}) {
+    edges {
+      node {
+        ns
+        data
+        language
+      }
+    }
+  }
+}
+`;
 export default cardDetail;

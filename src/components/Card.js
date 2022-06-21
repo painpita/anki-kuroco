@@ -1,18 +1,18 @@
 import React from "react"
 import "./card.scss"
 import { navigate } from "gatsby";
+import { Link, useI18next } from "gatsby-plugin-react-i18next";
 import { Fade } from "@mui/material";
-import { useIntl } from "gatsby-plugin-intl";
-import { LocalSeeTwoTone } from "@mui/icons-material";
 const Card = (props) => {
-    const intl = useIntl()
     // Use language iso for the routes
-    const locale = intl.locale !== "en" ? `/${intl.locale}` : ""
+    const t = useI18next()
 
     const handleClick = () => {
-      navigate('/card_details/'+props.card.subject, {state:{myCard:props.myCard,topics_id:props.card.topics_id,locale:locale}})
+      //navigate('/fr/card_details/'+props.card.subject, {state:{myCard:props.myCard,topics_id:props.card.topics_id,locale:"locale"}})
+      t.navigate('/card_details/'+props.card.subject, {state:{myCard:props.myCard,topics_id:props.card.topics_id,locale:"locale"}})
     }
-      return(<Fade in={true} direction="up" mountOnEnter unmountOnExit {...(true ? { timeout: props.index*200 } : {})}>
+      return(
+      <Fade in={true} direction="up" mountOnEnter unmountOnExit {...(true ? { timeout: props.index*200 } : {})}>
       <div role="command" className="card" onClick={handleClick} onKeyDown={handleClick}>
       <div className="content">
         <div className="front">

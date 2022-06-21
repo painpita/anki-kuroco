@@ -3,15 +3,12 @@ import { isLoggedIn } from "../services/auth"
 import Login from "./Login"
 import Logout from "./Logout"
 import {Paper, Typography} from "@mui/material"
-import { useIntl } from "gatsby-plugin-intl";
 import { useState } from "react"
 const Auth = (props) =>{
-  const intl = useIntl()
   // Use language iso for the routes
-  const locale = intl.locale !== "en" ? `/${intl.locale}` : ""
   const [user, setUser] = useState(null)
   async function getUser(){
-    const getUser = await isLoggedIn({locale:locale})
+    const getUser = await isLoggedIn()
     setUser(getUser)
   }
   getUser()

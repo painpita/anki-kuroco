@@ -5,13 +5,11 @@ import "./card-displayer.scss"
 import Button from "@mui/material/Button";
 import RefreshIcon from '@mui/icons-material/Refresh';
 import {isLoggedIn} from "../services/auth"
-import { useIntl } from "gatsby-plugin-intl";
 import { useState } from "react";
+import {navigate} from "gatsby"
 const CardDisplayer = (props) => {
   const [displayCards, setDisplayCards] = useState([])
-  const intl = useIntl()
   // Use language iso for the routes
-  const locale = intl.locale !== "en" ? `/${intl.locale}` : ""
   useEffect(()=>{
     getCards()
   }, [])
@@ -34,8 +32,7 @@ const CardDisplayer = (props) => {
         setDisplayCards(convertCardsToHtml(cardsFromReq))
     }
     catch{
-      isLoggedIn({locale:locale})
-      getCards()
+      navigate("/profile")
   }  
 
 
@@ -57,3 +54,4 @@ const CardDisplayer = (props) => {
 }
 
 export default CardDisplayer
+

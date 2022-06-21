@@ -1,12 +1,10 @@
 import * as React from "react"
 import PropTypes from "prop-types"
-import { Link } from "gatsby"
 import LanguageSelector from "./LanguageSelector";
-import { useIntl } from "gatsby-plugin-intl";
+import {Link} from 'gatsby-plugin-react-i18next';
+import {Trans, useTranslation} from 'gatsby-plugin-react-i18next';
 const Header = ({ data }) => {
-      const intl = useIntl()
       // Use language iso for the routes
-      const locale = intl.locale !== "en" ? `/${intl.locale}` : ""
       return(<header
           style={{
             margin: `0 auto`,
@@ -18,60 +16,58 @@ const Header = ({ data }) => {
         >
           <span>
             <Link
-              to={locale + "/"}
+              to='/'
               style={{
                 marginRight:"20px",
                 fontSize: `var(--font-sm)`,
                 textDecoration: `none`,
               }}
             >
-             {intl.formatMessage({ id: "cards" })}
-            </Link>
-      
-            <Link
-              to={locale + "/my-cards"}
-              style={{
-                marginRight:"20px",
-                fontSize: `var(--font-sm)`,
-                textDecoration: `none`,
-              }}
-            >
-              {intl.formatMessage({ id: "my_cards" })}
+              <Trans>cards</Trans>
             </Link>
             <Link
-              to={locale + "/new"}
+            to='/my-cards'
               style={{
                 marginRight:"20px",
                 fontSize: `var(--font-sm)`,
                 textDecoration: `none`,
               }}
             >
-              {intl.formatMessage({ id: "new_card" })}
+              <Trans>my_cards</Trans>
             </Link>
             <Link
-              to={locale + "/favorites"}
+             to='/favorites'
               style={{
                 marginRight:"20px",
-      
                 fontSize: `var(--font-sm)`,
                 textDecoration: `none`,
               }}
             >
-              {intl.formatMessage({ id: "favorites" })}
+              <Trans>favorites</Trans>
+            </Link>
+            <Link
+              to="/new"
+              style={{
+                marginRight:"20px",
+                fontSize: `var(--font-sm)`,
+                textDecoration: `none`,
+              }}
+            >
+            <Trans>new_card</Trans>
             </Link>
           </span>
           
           <span className="link-group link-group-right">
             <Link
-              to={locale + "/profile"}
+            to="/profile"
               style={{
                 marginRight:"20px",
                 fontSize: `var(--font-sm)`,
                 textDecoration: `none`,
               }}
             >
+              <Trans>profile</Trans>
               <LanguageSelector></LanguageSelector>
-              {intl.formatMessage({ id: "profile" })}
             </Link>
             <img
               alt="Kuroco logo"

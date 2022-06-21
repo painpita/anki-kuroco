@@ -9,24 +9,20 @@ import LikeButton from "./LikeButton"
 import { Box } from "@mui/material";
 import {Button} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useIntl } from "gatsby-plugin-intl";
 import { useState } from "react"
-
+import {Trans, useI18next} from 'gatsby-plugin-react-i18next';
 const CardDetail = (props) =>{
-  const intl = useIntl()
   // Use language iso for the routes
-  console.log(props)
   const [liked, setLiked] = useState(false)
   const [card, setCard] = useState({})
   const [connected, setConnected] = useState(false)
-  const locale = props.locale
-  console.log(locale)
+  const {language} = useI18next()
   useEffect(()=>{
     const getCard = async () =>{
       let cardsReq = null;
       try{
         //we remove the first / in locale
-        cardsReq = await axios.get("4/card-detail/"+props.topics_id+"?_lang="+locale.slice(1))
+        cardsReq = await axios.get("4/card-detail/"+props.topics_id+"?_lang="+language)
         await setCard(cardsReq.data.details)
       }
       catch(e){
@@ -64,26 +60,27 @@ const CardDetail = (props) =>{
 
   let deleteButton = (props.myCard ? <Button className="deleteButtonWrapper" onClick={deleteThisCard.bind()}><DeleteIcon/></Button> : <></>)
 
-  return(<Paper className={"paper"}
+  return(
+  <Paper className={"paper"}
       sx={{
         backgroundColor:'black',
         color:'white'
       }}
     elevation={8}>
     <Typography variant="" component="h1">
-    {card.ext_1}
+    {card.ext_1} 
     </Typography>
     <Typography variant="" component="h2">
-    {intl.formatMessage({ id: "meanings" })} : {card.ext_2}
+      <Trans>meanings</Trans> : {card.ext_2}
     </Typography>
     <Typography variant="" component="p">
-    {intl.formatMessage({ id: "onyomi_readings" })}{card.ext_3}
+      <Trans>onyomi_readings</Trans> : {card.ext_3}
     </Typography>
     <Typography variant="" component="p">
-    {intl.formatMessage({ id: "kunyomi_readings" })} {card.ext_4}
+      <Trans>kunyomi_readings</Trans> : {card.ext_4}
     </Typography>
     <Typography variant="" component="p">
-    {intl.formatMessage({ id: "related_words" })} {card.ext_6}
+      <Trans>meanings</Trans> : {card.ext_6}
     </Typography>
     <Box className="buttonsWrapper">
       <Typography variant="" component="div" className='jishoLink'>
