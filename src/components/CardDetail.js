@@ -80,7 +80,7 @@ const CardDetail = (props) =>{
       <Trans>kunyomi_readings</Trans> : {card.ext_4}
     </Typography>
     <Typography variant="" component="p">
-      <Trans>meanings</Trans> : {card.ext_6}
+      <Trans>related_words</Trans> : {card.ext_6}
     </Typography>
     <Box className="buttonsWrapper">
       <Typography variant="" component="div" className='jishoLink'>
