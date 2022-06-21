@@ -50,7 +50,7 @@ const NewCardAuto = ({props}) => {
     try{
       let req = await authAxios({
       method:"post",
-      url :"6/auto-card",
+      url :"6/auto-card-2",
       //headers: {'Content-Type' : 'application/json'},
       data: body})
       console.log(req)
@@ -68,10 +68,8 @@ const NewCardAuto = ({props}) => {
         text: 'Something went wrong',
         icon: 'error',
         confirmButtonText: ':('
-      })
-      
+      })      
     }
-    console.log(body)
   }
 
   const handleSliderChange = (name) => (e, value) => {
