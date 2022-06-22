@@ -1,9 +1,4 @@
-require('gatsby-plugin-intl')
-
 exports.createPages = async ({ actions }) => {
-  const intl = useIntl() 
-  // Use language iso for the routes
-  //const locale = intl.locale !== "en" ? `/${intl.locale}` : ""
   const { createPage } = actions
   /* if (page.path.match(/^\/.*\/card_details/)) {
     // notice page.context.language
