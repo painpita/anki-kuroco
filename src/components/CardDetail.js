@@ -16,7 +16,6 @@ import Collapse from '@mui/material/Collapse';
 import Swal from 'sweetalert2';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 const CardDetail = (props) =>{
-  // Use language iso for the routes
   const [liked, setLiked] = useState(false)
   const [card, setCard] = useState({})
   const [connected, setConnected] = useState(false)
@@ -27,17 +26,18 @@ const CardDetail = (props) =>{
     const getCard = async () =>{
       let cardsReq = null;
       try{
-        //we remove the first / in locale
-        console.log(language)
+        //HTTP request using the topics_id that was passed through location
         cardsReq = await axios.get("4/card-detail/"+props.topics_id+"?_lang="+language)
         await setCard(cardsReq.data.details)
       }
       catch(e){
         try{
         if(e.response.status===404){
+          //If we get 4O4 it means that the topic is not defined for this language. We get the default language and display a small warning.
           cardsReq = await axios.get("4/card-detail/"+props.topics_id)
-          console.log("caught warning")
           setDisplayWarning(!displayWarning)
+
+          //using a setstate function to let the interface update asynchronously
           await setCard(cardsReq.data.details)
         }
         }
@@ -52,21 +52,21 @@ const CardDetail = (props) =>{
         }
       }
       try{
+        //Fetch all the likes for user, then set a variable if the topics_id is contained in the likes array. Might be a better way to do this.
         let favReq = await axios.get("6/fav")
         let myLikes = favReq.data.list.map(like=>like.module_id)
         if(myLikes.includes(cardsReq.data.details.topics_id)){
           setLiked(true)
         }
+        //If this request did not return an error it means that the user is connected. We can set connected to true to let the user like the card.
         setConnected(true)
-  
       }
       catch(e){
         //navigate("/profile")
       }
     }
-
+    //use get card immediately when component is loaded to set the state
     getCard()
-
   }, [props])
 
 

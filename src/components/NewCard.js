@@ -15,13 +15,18 @@ import { isLoggedIn } from "../services/auth";
 import {Trans, useTranslation} from 'gatsby-plugin-react-i18next';
 
 const NewCard = ({props}) => {
-  // Use language iso for the routes
+
+  // The variable formValues is used to generate the request body. We use setFormValues in our change handlers to modify this variable.
+  const [formValues, setFormValues] = useState(defaultValues)
+
+  // This page should only be accessible by logged users
   try{
     isLoggedIn()
   }
   catch{
     navigate('/profile')
   }
+
 
   const defaultValues = {
     kanji: "",
@@ -33,6 +38,7 @@ const NewCard = ({props}) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
+    // Build a JSON body from the request got from the object formValues
     let body = {
       "subject": formValues.kanji,
       "slug": "",
@@ -54,11 +60,9 @@ const NewCard = ({props}) => {
       let req = await authAxios({
       method:"post",
       url :"6/new",
-      //headers: {'Content-Type' : 'application/json'},
       data: body})
-      
-      console.log(req.data.id)
-      navigate('/card_details/'+req.data.id, {state:{myCards:true, topics_id:req.data.id}})
+      // Display the details if the request is successful. Note that we set myCards to true in props so the user can delete the card if needed
+     navigate('/card_details/'+req.data.id, {state:{myCards:true, topics_id:req.data.id}})
     }
     catch(e){
       Swal.fire({
@@ -72,13 +76,15 @@ const NewCard = ({props}) => {
     console.log(body)
   }
 
+  // This function will set the state when the slider component is used.
   const handleSliderChange = (name) => (e, value) => {
     setFormValues({
       ...formValues,
       [name]: value,
     });
   };
-  const [formValues, setFormValues] = useState(defaultValues)
+
+  // This function will set the state when the slider component is used.
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormValues({
@@ -176,7 +182,7 @@ const NewCard = ({props}) => {
           />
         </div>
         <Button type="submit" className="newKanjiButton">
-          <Trans>save</Trans>²
+          <Trans>save</Trans>
         </Button>
         </ValidatorForm >
       </Paper>
