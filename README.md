@@ -89,7 +89,7 @@ For KuroKanji, we do not include any logic (fetching, computation...) in the pag
 
 In order to manage authentication and provide general fetching configuration, we can create a custom Axios client. To do this, create a new javascript file and have it export the following code :
 
-``
+`
 import axios from "axios"
 
 export default axios.create({
@@ -97,15 +97,15 @@ export default axios.create({
     credentials: true,
     withCredentials: true
 })
-``
+`
 
 This way, we do not need to add the base URL everytime. This may prevent errors and make the code more readable. Also, we use this configuration to store credentials in the client and send the correct headers for every request.
 
 We can then import this client instead of the defaut axios :
 
-``
+`
 import axios from "../../authAxios"
-``
+`
 
 ## Basic features
 ### Listing topics
