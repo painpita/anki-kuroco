@@ -1,6 +1,9 @@
 # KuroKanji
 ## _A simple Kanji learning app based on Kuroco_
 
+![example workflow](https://github.com/painpita/anki-kuroco/actions/workflows/build.yml
+/badge.svg)
+
 Powered by Gatsby, a React Framework ⚛️
 
 KuroKanji is　a Webapp that lets its users learn Kanji by managing their own card list and generating HTML tiles which feature a kanji on a side and its signification on the other.
