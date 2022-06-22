@@ -1,4 +1,7 @@
 # KuroKanji
+
+![workflow](https://github.com/painpita/anki-kuroco/actions/workflows/build.yml/badge.svg)
+
 ## _A simple Kanji learning app based on Kuroco_
 
 Powered by Gatsby, a React Framework ⚛️
