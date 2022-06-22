@@ -20,5 +20,7 @@
     "logout": "Déconnexion",
     "congratulations": "おめでとうございます！",
     "new_card_created" : "Votre nouvelle carte a été créée !",
-    "check_it_out" : "Allons voir ça !"
+    "check_it_out" : "Allons voir ça !",
+    "wrong_language" : "Cette carte utilise la langue par défaut (anglais)"
+
 }

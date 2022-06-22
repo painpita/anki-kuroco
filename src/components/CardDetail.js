@@ -28,6 +28,7 @@ const CardDetail = (props) =>{
       let cardsReq = null;
       try{
         //we remove the first / in locale
+        console.log(language)
         cardsReq = await axios.get("4/card-detail/"+props.topics_id+"?_lang="+language)
         await setCard(cardsReq.data.details)
       }
@@ -35,6 +36,7 @@ const CardDetail = (props) =>{
         try{
         if(e.response.status===404){
           cardsReq = await axios.get("4/card-detail/"+props.topics_id)
+          console.log("caught warning")
           setDisplayWarning(!displayWarning)
           await setCard(cardsReq.data.details)
         }
@@ -86,8 +88,8 @@ const CardDetail = (props) =>{
 
   let deleteButton = (props.myCard ? <Button className="deleteButtonWrapper" onClick={deleteThisCard.bind()}><DeleteIcon/></Button> : <></>)
   let relatedWords = card.ext_6 ? 
-  <Typography variant="" component="div" class="examples-wrapper">
-    <Trans>related_words</Trans> :
+  <Typography variant="" component="div" className="examples-wrapper">
+    <Trans>related_words</Trans>
       <Collapse className="related_words" orientation="vertical" in={checked} collapsedSize={22}>
         <ul>
           {card.ext_6.split("\n").slice(0,-1).map((elem)=><li>{elem}</li>)}
@@ -96,7 +98,7 @@ const CardDetail = (props) =>{
       <Button onClick={collapse}><OpenInFullIcon className="customIcon"></OpenInFullIcon></Button>
   </Typography> 
   : ""
-  let warningButton = displayWarning ? <WarningAmberIcon data-hover="Wrong language" className="warningButton"></WarningAmberIcon> : ""
+  let warningButton = displayWarning ? <div className="tooltip"><WarningAmberIcon data-hover="Wrong language" className="warningButton"></WarningAmberIcon><div className="tooltiptext"><Trans>wrong_language</Trans></div></div> : ""
   return(
   <Paper className={"paper"}
       sx={{
