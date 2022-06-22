@@ -119,6 +119,7 @@ const CardDetail = (props) =>{
     <Typography variant="" component="p">
       <Trans>kunyomi_readings</Trans> : {card.ext_4}
     </Typography>
+    <Typography variant="" component="p"><Trans>difficulty_level</Trans> : {card.contents_type_nm=="Cards" ? "N/A" : card.contents_type_nm}</Typography>
     {relatedWords}
     <Box className="buttonsWrapper">
       <Typography variant="" component="div" className='jishoLink'>
