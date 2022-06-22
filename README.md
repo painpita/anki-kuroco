@@ -101,8 +101,17 @@ export default axios.create({
 
 This way, we do not need to add the base URL everytime. This may prevent errors and make the code more readable. Also, we use this configuration to store credentials in the client and send the correct headers for every request.
 
+We can then import this client instead of the defaut axios :
+
+``
+import axios from "../../authAxios"
+``
+
 ## Basic features
 ### Listing topics
+
+
+
 ### Authentication
 ### Creating a topic
 ### Official topics
