@@ -67,8 +67,9 @@ const Header = ({ data }) => {
               }}
             >
               <Trans>profile</Trans>
-              <LanguageSelector></LanguageSelector>
             </Link>
+            <LanguageSelector></LanguageSelector>
+
             <img
               alt="Kuroco logo"
               height={20}
