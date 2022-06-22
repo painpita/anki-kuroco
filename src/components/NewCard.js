@@ -12,12 +12,10 @@ import authAxios from "../../authAxios"
 import Swal from 'sweetalert2';
 import { navigate } from "gatsby"
 import { isLoggedIn } from "../services/auth";
-import { useIntl } from "gatsby-plugin-intl";
+import {Trans, useTranslation} from 'gatsby-plugin-react-i18next';
 
 const NewCard = ({props}) => {
-  const intl = useIntl()
   // Use language iso for the routes
-  const locale = intl.locale !== "en" ? `/${intl.locale}` : ""
   try{
     isLoggedIn()
   }
@@ -58,12 +56,7 @@ const NewCard = ({props}) => {
       url :"6/new",
       //headers: {'Content-Type' : 'application/json'},
       data: body})
-      let result = await  Swal.fire({
-        title: intl.formatMessage({ id: "congratulations" }),
-        text: intl.formatMessage({ id: "new_card_created" }),
-        icon: 'success',
-        confirmButtonText: intl.formatMessage({ id: "check_it_out" })
-      })
+      
       console.log(req.data.id)
       navigate('/card_details/'+req.data.id, {state:{myCards:true, topics_id:req.data.id}})
     }
@@ -101,8 +94,7 @@ const NewCard = ({props}) => {
       
       <ValidatorForm className="newCardForm" onSubmit={handleSubmit}>
       <Typography component="h1" variant="">
-      {intl.formatMessage({ id: "create_new" })}
-
+        <Trans>create_new</Trans>
       </Typography>
         <FormControl>
             <TextValidator
@@ -119,10 +111,10 @@ const NewCard = ({props}) => {
             <TextField 
               multiline 
               className="kanjiInput" 
-              label={intl.formatMessage({ id: "difficulty_level" })}
               type="text"
               name="meanings"
               variant="outlined"
+              label={<Trans>meanings</Trans>}
               value={formValues.meanings}
               onChange={handleInputChange}
             />
@@ -150,7 +142,7 @@ const NewCard = ({props}) => {
             </div>
         </FormControl>
         <div className="sliderWrapper">
-        {intl.formatMessage({ id: "difficulty_level" })}
+        <Trans>difficulty_level</Trans>
         <Slider
           value={formValues.level}
           onChange={handleSliderChange("level")}
@@ -184,12 +176,11 @@ const NewCard = ({props}) => {
           />
         </div>
         <Button type="submit" className="newKanjiButton">
-          {intl.formatMessage({ id: "save" })}
+          <Trans>save</Trans>²
         </Button>
         </ValidatorForm >
       </Paper>
     )
 } 
-
 
 export default NewCard

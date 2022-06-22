@@ -9,28 +9,45 @@ import LikeButton from "./LikeButton"
 import { Box } from "@mui/material";
 import {Button} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useIntl } from "gatsby-plugin-intl";
 import { useState } from "react"
-
+import {Trans, useI18next} from 'gatsby-plugin-react-i18next';
+import OpenInFullIcon from '@mui/icons-material/OpenInFull';
+import Collapse from '@mui/material/Collapse';
+import Swal from 'sweetalert2';
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 const CardDetail = (props) =>{
-  const intl = useIntl()
   // Use language iso for the routes
-  console.log(props)
   const [liked, setLiked] = useState(false)
   const [card, setCard] = useState({})
   const [connected, setConnected] = useState(false)
-  const locale = props.locale
-  console.log(locale)
+  const {language} = useI18next()
+  const [checked, setChecked] = React.useState(false);
+  const [displayWarning, setDisplayWarning] = React.useState(false)
   useEffect(()=>{
     const getCard = async () =>{
       let cardsReq = null;
       try{
         //we remove the first / in locale
-        cardsReq = await axios.get("4/card-detail/"+props.topics_id+"?_lang="+locale.slice(1))
+        cardsReq = await axios.get("4/card-detail/"+props.topics_id+"?_lang="+language)
         await setCard(cardsReq.data.details)
       }
       catch(e){
-        console.log(e)
+        try{
+        if(e.response.status===404){
+          cardsReq = await axios.get("4/card-detail/"+props.topics_id)
+          setDisplayWarning(!displayWarning)
+          await setCard(cardsReq.data.details)
+        }
+        }
+        catch(e){
+          Swal.fire({
+            title: 'Error !',
+            text: 
+            e.message,
+            icon: 'error',
+            confirmButtonText: ':('
+          })     
+        }
       }
       try{
         let favReq = await axios.get("6/fav")
@@ -42,7 +59,7 @@ const CardDetail = (props) =>{
   
       }
       catch(e){
-        navigate("/profile")
+        //navigate("/profile")
       }
     }
 
@@ -62,29 +79,45 @@ const CardDetail = (props) =>{
     }
   }
 
-  let deleteButton = (props.myCard ? <Button className="deleteButtonWrapper" onClick={deleteThisCard.bind()}><DeleteIcon/></Button> : <></>)
+  const collapse = () =>{
+    setChecked(!checked)
+  }
 
-  return(<Paper className={"paper"}
+
+  let deleteButton = (props.myCard ? <Button className="deleteButtonWrapper" onClick={deleteThisCard.bind()}><DeleteIcon/></Button> : <></>)
+  let relatedWords = card.ext_6 ? 
+  <Typography variant="" component="div" class="examples-wrapper">
+    <Trans>related_words</Trans> :
+      <Collapse className="related_words" orientation="vertical" in={checked} collapsedSize={22}>
+        <ul>
+          {card.ext_6.split("\n").slice(0,-1).map((elem)=><li>{elem}</li>)}
+        </ul>
+      </Collapse>
+      <Button onClick={collapse}><OpenInFullIcon className="customIcon"></OpenInFullIcon></Button>
+  </Typography> 
+  : ""
+  let warningButton = displayWarning ? <WarningAmberIcon data-hover="Wrong language" className="warningButton"></WarningAmberIcon> : ""
+  return(
+  <Paper className={"paper"}
       sx={{
         backgroundColor:'black',
         color:'white'
       }}
     elevation={8}>
+      {warningButton}
     <Typography variant="" component="h1">
-    {card.ext_1}
+    {card.ext_1} 
     </Typography>
     <Typography variant="" component="h2">
-    {intl.formatMessage({ id: "meanings" })} : {card.ext_2}
+      <Trans>meanings</Trans> : {card.ext_2}
     </Typography>
     <Typography variant="" component="p">
-    {intl.formatMessage({ id: "onyomi_readings" })}{card.ext_3}
+      <Trans>onyomi_readings</Trans> : {card.ext_3}
     </Typography>
     <Typography variant="" component="p">
-    {intl.formatMessage({ id: "kunyomi_readings" })} {card.ext_4}
+      <Trans>kunyomi_readings</Trans> : {card.ext_4}
     </Typography>
-    <Typography variant="" component="p">
-    {intl.formatMessage({ id: "related_words" })} {card.ext_6}
-    </Typography>
+    {relatedWords}
     <Box className="buttonsWrapper">
       <Typography variant="" component="div" className='jishoLink'>
         <a target="_blank" rel="noreferrer" href={"https://jisho.org/search/%23kanji%20"+card.ext_1}>

@@ -2,15 +2,14 @@ import { navigate } from "gatsby"
 import React from "react"
 import {handleLogout} from "../services/auth"
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
-import { useIntl } from "gatsby-plugin-intl";
 import { Button} from "@mui/material"
 import axios from "../../authAxios";
 import {useEffect, useState } from "react"
+import {Trans, useTranslation} from 'gatsby-plugin-react-i18next';
+
 const Logout = (props) => {
 
-    const intl = useIntl()
     // Use language iso for the routes
-    const locale = intl.locale !== "en" ? `/${intl.locale}` : ""
     const [nbCards, setNbCards] = useState(0)
 
     useEffect(()=>{
@@ -32,19 +31,18 @@ const Logout = (props) => {
         event.preventDefault()
         console.log("logging you out")
         await handleLogout()
-        navigate('/')
     }
 
         return(<>
         <ValidatorForm className="formWrapper" onSubmit={handleSubmit}>
             <div>
-                {intl.formatMessage({ id: "logged_in_as" })} {props.user.email}
+                <Trans>logged_in_as</Trans> {props.user.email}
             </div>
             <div>
-                {intl.formatMessage({ id: "you_have_generated" })} {nbCards} {intl.formatMessage({ id: "you_have_generated_cards" })} !
+                <Trans>you_have_generated</Trans> {nbCards} <Trans>you_have_generated_cards</Trans> !
             </div>
             <Button className={"formButton"} type="submit">
-                {intl.formatMessage({ id: "logout" })}
+                <Trans>logout</Trans>
             </Button>
       </ValidatorForm>
       </>)

@@ -14,23 +14,25 @@ module.exports = {
       {
         resolve: `gatsby-source-filesystem`,
         options: {
-          name: `markdown-pages`,
-          path: `${__dirname}/src/markdown-pages`,
-        },
+          path: `${__dirname}/locales`,
+          name: `locale`
+        }
       },
-      `gatsby-transformer-remark`,
       {
-        resolve: `gatsby-plugin-intl`,
+        resolve: `gatsby-plugin-react-i18next`,
         options: {
-          // Directory with the strings JSON
-          path: `${__dirname}/src/intl`,
-          // Supported languages
+          localeJsonSourceName: `locale`,
           languages: [`en`, `fr`, `jp`],
-          // Default site language
           defaultLanguage: `en`,
-          // Redirects to `/en` in the route `/`
-          redirect: false,
-        },
-      },
+          siteUrl: `http://localhost:8000/`,
+          i18nextOptions: {
+            interpolation: {
+              escapeValue: false 
+            },
+            //keySeparator: false,
+            nsSeparator: false
+          },
+        }
+      }
 ],
 }
