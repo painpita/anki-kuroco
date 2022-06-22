@@ -60,6 +60,5 @@ KuroKanji also uses the following tools :
 
 Some bugs remain unfixed for now : 
   * Sometimes, the user might be redirected to the profile page without apparent reason
-  * If the language is switched to japanese, it can't be changed back
   * If the language is different from english, it will not display in flip cards (kuroco bug)
 
