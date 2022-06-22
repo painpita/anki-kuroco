@@ -6,19 +6,8 @@ import { navigate } from "gatsby";
 import { Link, useI18next } from "gatsby-plugin-react-i18next";
 import ReactCountryFlag from "react-country-flag"
 import { translate } from "react-i18next"
-import {
-    IconFlagUK,
-    IconFlagFR
-  } from 'material-ui-flags';
-  
 const LanguageSelector = () => {
-
-  // Use language iso for the routes
     const t = useI18next()
-    const handleChange = (event) =>{
-      event.preventDefault()
-      navigate("/")
-    }
     const {languages, changeLanguage} = useI18next();
 
     const handleChangeLanguage = (e) => {

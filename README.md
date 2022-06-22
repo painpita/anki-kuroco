@@ -519,7 +519,8 @@ return (<div className="like">
 ```
 [![Image from Gyazo](https://t.gyazo.com/teams/diverta/198b378d3cc3173069dfd68e147c5c03.png)](https://diverta.gyazo.com/198b378d3cc3173069dfd68e147c5c03)
 
-Using some CSS styling, we get a cool "like" button !
+Using some CSS styling, we get a cool "like" button !  
+
 [![Image from Gyazo](https://t.gyazo.com/teams/diverta/deed71d887e8df339f4e57470bc70acd.gif)](https://diverta.gyazo.com/deed71d887e8df339f4e57470bc70acd)
 (thx https://codepen.io/robeen/pen/PbvJjy for the design)
 
@@ -591,3 +592,130 @@ Now, we just need to attach this function to a POST endpoint in the API page, an
 [![Image from Gyazo](https://t.gyazo.com/teams/diverta/f186c443095d02f096f2adfc43608c98.png)](https://diverta.gyazo.com/f186c443095d02f096f2adfc43608c98)
 
 ### Multi-language feature (using i18next)
+
+There are many solutions available to provide multi-language support in a react environment. For this tutorial, we will use i18next with a gatsby wrapper plugin called gatsby-plugin-react-i18next. This plugin has many advantages :
+  * It provides many useful tools like the useI18next hook that lets us access data easily in plugins
+  * It works seamlessly with dynamic page generation unlike other Gatsby multi language plugins 
+  * It passes the language in the URL, allowing better referencing in browsers
+  * It is an official Gatsby plugin
+  
+So, let's get started using gatsby-plugin-react-i18next !
+
+Start by installing the required dependencies :
+`npm install --save gatsby-plugin-react-i18next i18next react-i18next`
+
+Then, import the plugin in your gatsby-config.js file :
+
+```
+{
+        resolve: `gatsby-plugin-react-i18next`,
+        options: {
+          localeJsonSourceName: `locale`,
+          languages: [`en`, `fr`, `jp`],
+          defaultLanguage: `en`,
+          siteUrl: `http://localhost:8000/`,
+          i18nextOptions: {
+            interpolation: {
+              escapeValue: false 
+            },
+            //keySeparator: false,
+            nsSeparator: false
+          },
+        }
+      }
+```
+
+Also, import the gatsby-source-filesystem which will be needed.
+
+```
+{
+        resolve: `gatsby-source-filesystem`,
+        options: {
+          path: `${__dirname}/locales`,
+          name: `locale`
+        }
+      },
+```
+
+In order to enable translations, create a /locale directory at the root of the project. It should contain a sub-directory for every language and a translation.json file under each of these folders.  
+
+[![Image from Gyazo](https://t.gyazo.com/teams/diverta/0f51727cf4e5f6d267ed28f5ed6c2b93.png)](https://diverta.gyazo.com/0f51727cf4e5f6d267ed28f5ed6c2b93)  
+
+You can use this image as an example for the translation.json file :  
+
+[![Image from Gyazo](https://t.gyazo.com/teams/diverta/494fa2cbcda0730c858b028eade647c5.png)](https://diverta.gyazo.com/494fa2cbcda0730c858b028eade647c5)
+
+The last step before implementing translations in our components is to add this function to your gatsby-node.js file :
+
+```
+exports.onPostBuild = () => {
+  console.log("Copying locales")
+  fs.copySync(
+    path.join(__dirname, "/locales"),
+    path.join(__dirname, "/public/locales")
+  )
+}```
+
+As you can see this will make our translation files visible at the /locales path on the file server.
+
+Let's start translating right away ! 
+
+We need to insert this GraphQL query to any page that needs translating :
+```
+export const query = graphql`
+query($language: String!) {
+  locales: allLocale(filter: {language: {eq: $language}}) {
+    edges {
+      node {
+        ns
+        data
+        language
+      }
+    }
+  }
+}
+`;
+```
+
+Then we can import the required code in our components :
+`import {Trans, useI18next} from 'gatsby-plugin-react-i18next';`
+
+The "Trans" component can be called like a JSX tag : <Trans>meanings</Trans>. The content is then automatically translated to locale.meaning !
+
+Finally, let's create a component to change the language.
+
+We will use a Material useI18next drop-down together with react-country-flag :
+```
+return (
+        <FormControl variant="standard">
+        <Select
+          labelId="demo-simple-select-standard-label"
+          id="demo-simple-select-standard"
+          label="Language"
+          defaultValue={t.language}
+          onChange= {handleChangeLanguage}
+        >
+            <MenuItem value="en"> <ReactCountryFlag countryCode="GB" /></MenuItem>
+            <MenuItem value="fr"><ReactCountryFlag countryCode="FR" /></MenuItem>
+            <MenuItem value="jp"><ReactCountryFlag countryCode="JP" /></MenuItem>
+        </Select>
+      </FormControl>
+    )
+```
+
+Our handler function will use the changeLanguage() function from the useI18next hook :
+```
+  const t = useI18next()
+    const {languages, changeLanguage} = useI18next();
+
+    const handleChangeLanguage = (e) => {
+      changeLanguage(e.target.value)
+    }
+```
+
+That's it !
+
+We can use the dropdown to switch the language in our application :
+
+[![Image from Gyazo](https://t.gyazo.com/teams/diverta/7380672b44d1ca0162d17980599c5e35.gif)](https://diverta.gyazo.com/7380672b44d1ca0162d17980599c5e35)
+
