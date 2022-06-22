@@ -68,7 +68,6 @@ export const isLoggedIn = async (props) => {
       return user
   }
   catch(e){
-    // Use language iso for the routes
     return null
   }
 }

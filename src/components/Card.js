@@ -4,11 +4,9 @@ import { navigate } from "gatsby";
 import { Link, useI18next } from "gatsby-plugin-react-i18next";
 import { Fade } from "@mui/material";
 const Card = (props) => {
-    // Use language iso for the routes
     const t = useI18next()
 
     const handleClick = () => {
-      //navigate('/fr/card_details/'+props.card.subject, {state:{myCard:props.myCard,topics_id:props.card.topics_id,locale:"locale"}})
       t.navigate('/card_details/'+props.card.subject, {state:{myCard:props.myCard,topics_id:props.card.topics_id,locale:"locale"}})
     }
       return(

@@ -29,7 +29,6 @@ const Logout = (props) => {
 
     const handleSubmit = async event => {
         event.preventDefault()
-        console.log("logging you out")
         await handleLogout()
     }
 
