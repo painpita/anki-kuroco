@@ -16,6 +16,13 @@ import {Trans, useTranslation} from 'gatsby-plugin-react-i18next';
 
 const NewCard = ({props}) => {
 
+  const defaultValues = {
+    kanji: "",
+    meanings: "",
+    on: "",
+    kun: "",
+    level: 0,
+  };
   // The variable formValues is used to generate the request body. We use setFormValues in our change handlers to modify this variable.
   const [formValues, setFormValues] = useState(defaultValues)
 
@@ -26,15 +33,6 @@ const NewCard = ({props}) => {
   catch{
     navigate('/profile')
   }
-
-
-  const defaultValues = {
-    kanji: "",
-    meanings: "",
-    on: "",
-    kun: "",
-    level: 0,
-  };
 
   const handleSubmit = async (event) => {
     event.preventDefault()
