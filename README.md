@@ -29,10 +29,10 @@ npm v14.15.0 or higher
 
 Run the following commands to start the app in development mode :
 
-``
+```
 npm install 
 npm run dev
-``
+```
 
 ## 🔌 Plugins
 
@@ -244,11 +244,350 @@ We can then display the cards in our frontend !
 
 Cool ! Using some normal CSS, we can have the card flip when we hover it 😎
 
+In KuroKanji, we added some spice by making Kuroco return cards in a random order by setting the "shuffle" parameter. By combining this with the "count" parameter, we can display seemingly random cards on the screen.
+
 ### Authentication
+
+The authentication process is more complicated. There are many ways to implement some authentication in a webapp. We will discuss how it is done in KuroKanji.
+
+First, let's define authentication on Kuroco's side : start by creating a new API ("auth_users in KuroKanji"). Using the "security" menu, we select the "Dynamic access token". We then create the 4 standard routes for authentication :
+[![Image from Gyazo](https://t.gyazo.com/teams/diverta/096126f4570619a068a6aece61dc4bfc.png)](https://diverta.gyazo.com/096126f4570619a068a6aece61dc4bfc)
+
+The next step is creating a "service" to hold the authentication functions. We define a "service" as a set of variables and functions that doesn't return any templating.
+
+Let's start by implementing a login function :
+```
+export const handleLogin = async ({ email, password }) => {
+    const {data:{grant_token}} = await axios.post("/6/login",{email,password})
+    const {data:{access_token}} = await axios.post("/6/token",{grant_token})
+    setUser({username:email})
+    saveAccessToken(access_token)
+    setAccessTokenOnRequestHeader(access_token)
+}
+```
+
+  1. The "login" endpoint returns a grant_token that we can use against the "token" endpoint to get the "grant_token".
+  2. We then set the user using the setUser function to access data like user email and name in the app
+  3. We also save the access token using saveAccessToken
+  4. Finally, we attach the token to the axios client
+
+Here are the functions called in handleLogin:
+
+```
+const saveAccessToken = token => {
+  window.localStorage.setItem("accessToken", JSON.stringify(token))
+}
+
+const setAccessTokenOnRequestHeader = (rcmsApiAccessToken) => {
+            axios.defaults.headers.common = {
+                'X-RCMS-API-ACCESS-TOKEN': rcmsApiAccessToken.value
+            }    
+}
+
+const setUser = user => {
+  window.localStorage.setItem("gatsbyUser", JSON.stringify(user))
+}
+```
+
+We just store the data in the local storage.
+In order to store the token in the Axios client, we set the 'X-RCMS-API-ACCESS-TOKEN' value in the axios headers.
+
+Let's test these functions by creating a "Login" component !
+
+It should return a form to let us send our information to Kuroco. Here we use the ValidatorForm from material UI to validate the fields.
+
+```
+ <div className="formWrapper">
+         <Typography><Trans>not_logged_in</Trans></Typography>
+          <ValidatorForm className="formWrapper" onSubmit={handleSubmit}>
+          <TextValidator
+              className="email" 
+              label="email" 
+              type="text"
+              name="email"
+              variant="outlined" 
+              validators={['required',"isEmail"]}
+              errorMessages={['This field is required',"Should be email"]}
+              value={loginInfo.email}
+              onChange={handleUpdate}
+            />
+          <TextValidator
+              className="password" 
+              label="password" 
+              type="password"
+              name="password"
+              variant="outlined" 
+              validators={['required']}
+              errorMessages={['This field is required']}
+              value={loginInfo.password}
+              onChange={handleUpdate}
+            />
+          <Button className={"formButton"} type="submit">
+          <Trans>login</Trans>
+        </Button>
+        </ValidatorForm>
+      </div>
+```
+This is the function that is called when the form is submitted : 
+
+```
+import { handleLogin, isLoggedIn } from "../services/auth"
+  const handleSubmit = async event => {
+    event.preventDefault()
+    try{ 
+      await handleLogin(loginInfo)
+    }
+    catch(e){
+      window.alert(e)
+      loginInfo.message=e
+      return
+  }
+  navigate("/")
+}
+```
+This function is simply calling the "handleLogin" function from our auth service. If it fails, it will display a message to the user.
+
+When we submit the correct info to our form, we should see these values in our local storage :
+[![Image from Gyazo](https://t.gyazo.com/teams/diverta/d3fc3eaff17a5bc9693298431fee8a43.png)](https://diverta.gyazo.com/d3fc3eaff17a5bc9693298431fee8a43)
+
+We will use this access token to check if the user is connected and fetch a grant_token when needed.
+
+Next we will implement a function to check if the session is still alive in Kuroco to avoid any session mismatch between the frontend and the backend :
+
+```
+export const isLoggedIn = async (props) => {
+  try{
+      const token = getAccessToken()
+      setAccessTokenOnRequestHeader(token)
+      const {data} = await axios.get('/6/profile')
+      setUser({
+        email : data.email, 
+        name1 : data.name1, 
+        name2: data.name2,
+        language: data.tags[0].tag_nm
+      })
+      const user = getUser()
+      return user
+  }
+  catch(e){
+    return null
+  }
+}
+```
+
+We will also implement a logout function :
+
+```
+export const handleLogout = async () => {
+  try{
+    await axios.post("/6/logout")
+  }
+  catch{}
+  setUser(null)
+  saveAccessToken(null)
+
+  setAccessTokenOnRequestHeader({rcmsApiAccessToken:null})
+}
+```
+
+This function clears the session on the backend and resets the local storage and the axios header.
+
+The logout component is a very simple form with a submit handler that looks like this :
+```
+    const handleSubmit = async event => {
+        event.preventDefault()
+        await handleLogout()
+    }
+```
+
+Finally, we wrap everything in an "Auth" component that will display the correct form based on user state:
+
+```
+const Auth = (props) =>{
+  // Use language iso for the routes
+  const [user, setUser] = useState(null)
+  async function getUser(){
+    const getUser = await isLoggedIn()
+    setUser(getUser)
+  }
+  getUser()
+    
+    if((user==null)|(user==undefined)){
+      return(<Paper className={"paper"}>
+      <div
+    style={{
+      display: "flex",
+      flex: "1",
+      justifyContent: "space-between",
+      borderBottom: "1px solid #d1c1e0",
+    }}
+  >
+    <Login></Login>
+
+  </div>
+  </Paper>)
+    }
+    else{
+      return (<Paper className={"paper"}>
+        <div className="logoutCard">
+          <Logout user={user}></Logout>
+        </div>
+        </Paper>)
+    }
+}
+```
+
+### Displaying topic details
+
+Generating pages dynamically in Gatsby is easy : just create a 'card_details/' folder under 'src/pages/' which contains a page called [id].js.
+The bracket notation is used to indicate that the URL should be dynamic and display different information according to what we pass in the access link.
+Take a look a the navigation we had in Card.js :
+
+```
+const handleClick = () => {
+      t.navigate('/card_details/'+props.card.subject, {state:{myCard:props.myCard,topics_id:props.card.topics_id,locale:"locale"}})
+    }
+```
+We can pass the data using the second parameter of navigate().
+
+Let's see how we can get this data in the [id].js page !
+
+```
+import React from "react"
+import Layout from "../../components/Layout"
+import CardDetail from "../../components/CardDetail"
+
+const cardDetail = (props) => {
+  if(typeof window!=="undefined"){
+  return <div>
+  <Layout>
+    <CardDetail myCard={props.location.state.myCard} topics_id={props.location.state.topics_id} locale={props.location.state.locale}></CardDetail>
+  </Layout>
+  </div>
+  }
+  else return
+}
+
+export default cardDetail;
+```
+
+Voilà ! We can access this data in our CardDetail component.
+
+Again, the CardDetail component is lengthy. Please check the comments in the code for more information regarding this component.
+
 ### Creating a topic
+Now that we have a logged user, let's generate new topics from the frontend ! 
+
+Start by creating a new endpoint in the auth_users API : 
+[![Image from Gyazo](https://t.gyazo.com/teams/diverta/eb6fc4832034b838d079b968658e3756.png)](https://diverta.gyazo.com/eb6fc4832034b838d079b968658e3756)
+
+Then we will create a new component called "NewCard". The code for this is quite lengthy, so please refer to the NewCard component comments for this process.
+
 ### Official topics
+
+In KuroKanji, we have a list of "official" topics.
+This is used to provide some cards that anyone can use, while making sure that topics generated by users remain private (there should be no api query that returns all cards directly).
+To do this, we add the tag "validated" to cards that should be "official" :
+[![Image from Gyazo](https://t.gyazo.com/teams/diverta/23bd17a5ec06186dba66befe786a515e.png)](https://diverta.gyazo.com/23bd17a5ec06186dba66befe786a515e)
+
+And we add API queries to get all cards that are tagged with "validated" : 
+
+[![Image from Gyazo](https://t.gyazo.com/teams/diverta/53cfd6a460d608948f5b03a5bb5e83c0.png)](https://diverta.gyazo.com/53cfd6a460d608948f5b03a5bb5e83c0)
+
+Notice the parameter "tag_id=['2']"
+
 ### Favorite topics
 
+Using the "activity" module in Kuroco, we can let users "like" cards so they can display their "liked" cards in a separate page.
+To do this, we first define "like" and "unlike" routes in Kuroco :
+[![Image from Gyazo](https://t.gyazo.com/teams/diverta/ba9e08a788a1d05eefb8848035e367bf.png)](https://diverta.gyazo.com/ba9e08a788a1d05eefb8848035e367bf)
+
+The "fav" route is used to get a list of our favorite IDs.
+
+We also define a "get-fav" route to get all topics that the user liked using the "my_favorite_list" parameter :
+[![Image from Gyazo](https://t.gyazo.com/teams/diverta/506437bcf0343fb1574d72e74c64d734.png)](https://diverta.gyazo.com/506437bcf0343fb1574d72e74c64d734)
+
+Notice that "get-fav" and "fav" are different :
+  * "fav" only returns a list of ID. It is linked to the "favorite" model that is a relation between a content and a member.
+  * "get-fav" returns a list of topics that were liked by a member. It is linked to the "topic" model.
+
+To call these endpoint, we will create a simple LikeButton component which is loaded in CardDetail :
+
+```
+return (<div className="like">
+  <input type="checkbox" id="checkbox" checked={liked} onChange={onChange}/>
+```
+[![Image from Gyazo](https://t.gyazo.com/teams/diverta/198b378d3cc3173069dfd68e147c5c03.png)](https://diverta.gyazo.com/198b378d3cc3173069dfd68e147c5c03)
+
+Using some CSS styling, we get a cool "like" button !
+[![Image from Gyazo](https://t.gyazo.com/teams/diverta/deed71d887e8df339f4e57470bc70acd.gif)](https://diverta.gyazo.com/deed71d887e8df339f4e57470bc70acd)
+(thx https://codepen.io/robeen/pen/PbvJjy for the design)
+
 ## Advanced features
+
+In this part we will discuss more "advanced" features within KuroKanji.
+
 ### Automatic card generation (using pre-processing)
+
+When creating a new card we have to search for all the files and fill them manually. Tedious, isn't it ?
+Fortunately this process can be automated using Kuroco pre-processing !
+
+There are 2 different APIs that we used for this function : 
+  * https://kanjiapi.dev/v1/kanji/　is a very simple API with no authentication. While convenient, it does not provide any example words, and is pretty limited.
+  * https://kanjialive-api.p.rapidapi.com/api/public/kanji/ is a very complete Kanji API, but it requires API authentication and an account on https://rapidapi.com/
+
+We will start with kanjiapi.dev. First, let's look at the response we get from the API : 
+
+[![Image from Gyazo](https://t.gyazo.com/teams/diverta/cda6c36d479df6d7892d4aaadf54e78e.png)](https://diverta.gyazo.com/cda6c36d479df6d7892d4aaadf54e78e)
+
+We can see that the response contains arrays such as "meanings", "kun_readins", "on_readings" which we will use in our pre-processing script.
+
+Now, let's create a function in Kuroco !
+
+We start by initializing the variables we need :
+
+```
+{assign var="baseUrl" value="https://kanjiapi.dev/v1/kanji/"}
+{assign_array var="request" values=""}
+{assign var=meanings value=""}
+{assign var=on_readings value=""}
+{assign var=kun_readings value=""}
+```
+
+Then, we check the value of of ext_1 in the request and assign it as the kanji in our API query :
+```
+if isset($smarty.post.ext_1)}
+    {assign var="queryKanji" value=$smarty.post.ext_1}
+```
+
+Using the api function, we can make a HTTP query. Let's make a GET request and store the response in the "kanji" variable.
+```
+    {api endpoint=$baseUrl|cat:$queryKanji method='GET' query='' cache_time=20 var='kanji' status_var='status'}
+```
+
+We then decode the value using the json_decode modifier: 
+```
+    {assign var=result_json value=$kanji|json_decode}
+```
+
+Once the json is decoded, we use a for loop to parse and store the data, for example with the meanings:
+
+```
+{foreach from=$result_json.meanings item=meaning}
+        {assign var=meanings value=$meanings|cat:"$meaning\n"}
+    {/foreach}
+```
+
+Finally, we store the data in our request variable. This variable will be transmitted to the Kuroco engine.
+```
+  {assign
+        var="request.ext_2"
+        value=$meanings
+  }
+```
+
+Now, we just need to attach this function to a POST endpoint in the API page, and it will be triggered everytime we create a new card using this endpoint !
+
+[![Image from Gyazo](https://t.gyazo.com/teams/diverta/f186c443095d02f096f2adfc43608c98.png)](https://diverta.gyazo.com/f186c443095d02f096f2adfc43608c98)
+
 ### Multi-language feature (using i18next)
