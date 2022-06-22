@@ -22,9 +22,7 @@ const LanguageSelector = () => {
     const {languages, changeLanguage} = useI18next();
 
     const handleChangeLanguage = (e) => {
-      console.log("current language : " + t.language)
-      console.log("changing language : " +e.target.value)
-      changeLanguage(e.target.value, t.originalPath)
+      changeLanguage(e.target.value)
     }
   
     return (
