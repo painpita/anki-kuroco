@@ -2,6 +2,7 @@
 
 ![workflow](https://github.com/painpita/anki-kuroco/actions/workflows/build.yml/badge.svg)
 
+[Deployment](https://kurokanji.g.kuroco-front.app/)
 ## _A simple Kanji learning app based on Kuroco_
 
 Powered by Gatsby, a React Framework ⚛️
@@ -654,7 +655,8 @@ exports.onPostBuild = () => {
     path.join(__dirname, "/locales"),
     path.join(__dirname, "/public/locales")
   )
-}```
+}
+```
 
 As you can see this will make our translation files visible at the /locales path on the file server.
 
@@ -704,6 +706,7 @@ return (
 ```
 
 Our handler function will use the changeLanguage() function from the useI18next hook :
+
 ```
   const t = useI18next()
     const {languages, changeLanguage} = useI18next();
