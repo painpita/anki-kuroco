@@ -89,7 +89,7 @@ const CardDetail = (props) =>{
   let deleteButton = (props.myCard ? <Button className="deleteButtonWrapper" onClick={deleteThisCard.bind()}><DeleteIcon/></Button> : <></>)
   let relatedWords = card.ext_6 ? 
   <Typography variant="" component="div" className="examples-wrapper">
-    <Trans>related_words</Trans>
+    {/*<Trans>related_words</Trans>*/}
       <Collapse className="related_words" orientation="vertical" in={checked} collapsedSize={22}>
         <ul>
           {card.ext_6.split("\n").slice(0,-1).map((elem)=><li>{elem}</li>)}
