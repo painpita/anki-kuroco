@@ -45,24 +45,26 @@ KuroKanji uses the following plugins :
 ## 🧩 Frameworks
 
 KuroKanji uses the following frameworks :
-  * Gatsby
+  * **Gatsby**  
 Gatsby is a static site generator (SSG) that binds together features of React, Webpack and GraphQL to help generate fast static websites. In KuroKanji, we use Gatsby features to help us navigate through React components, pass data between components, handle multi-language using GraphQL and sharing data through the website.
-  * React
+  * **React**  
 React is a front-end framework and a JS library that helps us create dynamic website by generating 'components' that bind together a template and its logic.
-  * Material UI
+  * **Material UI**  
 Material UI is a React library that gives developers ready-to-use components to generate their front-end.
 
 ## 🛠️ Other tools
 
 KuroKanji also uses the following tools :
-  * Axios : used for building HTTP queries & interacting with Kuroco as well as managing authentication
+  * **Axios** : used for building HTTP queries & interacting with Kuroco as well as managing authentication
+  * **Swal** : used to display nice popup notifications in order to display information or get additional inputs
 
 ## 🐛 Remaining bugs
 
 Some bugs remain unfixed for now : 
   * Sometimes, the user might be redirected to the profile page without apparent reason. This is caused by incorrect error handling (401 unauthorized should redirect, but not other errors)
   * If the language is different from english, it will not display in flip cards (kuroco bug)
-
+  * When expecting card details, changing the language will trigger a 404 error if the card is not defined in target language
+  
 ## Deploying the Gatsby App on KurocoFront
 
 To deploy the app, the kuroco_front.json file should be stored in the /static folder at the root of the project. Upon building, Gatsby will move this file into the /public folder where it can be statically accessed.
@@ -131,7 +133,7 @@ Don't forget to specify the topics_group_id parameter that should be equal to th
 We can test our configuration in Swagger :
 [![Image from Gyazo](https://t.gyazo.com/teams/diverta/593ab8c48626993f49f51eba5268a87d.png)](https://diverta.gyazo.com/593ab8c48626993f49f51eba5268a87d)
 
-やった ! We can get our cards with the Kuroco API !
+**やった** ! We can get our cards with the Kuroco API !
 
 The next step is to create a component to display this data in our frontend.
 For this we have a component named "CardDisplayer". It works in 3 steps : 
@@ -185,7 +187,7 @@ function convertCardsToHtml(cards){
   } 
 ```
 
-Note how we pass the data down to the component using props.
+Notice how we pass the data down to the component using props.
 
 For step 3 we will make our component return a template that contains the "displayCards" variable :
 ```
