@@ -36,3 +36,47 @@
 .deleteButtonWrapper{
     color:white;
 }
+
+.examples-wrapper{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.related_words{
+    width:80%;
+}
+
+.customIcon{
+    color:white;
+    background:none;
+}
+
+.warningButton{
+    color:red;
+    float:left;
+}
+
+.warningButton:before{
+  content: attr(data-hover);
+  visibility: hidden;
+  opacity: 0;
+  width: 140px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px 0;
+  transition: opacity 1s ease-in-out;
+
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 110%;
+
+}
+.warningButton:hover:before{
+    opacity: 1;
+  visibility: visible;
+
+}
