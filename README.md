@@ -56,9 +56,58 @@ Material UI is a React library that gives developers ready-to-use components to 
 KuroKanji also uses the following tools :
   * Axios : used for building HTTP queries & interacting with Kuroco as well as managing authentication
 
-## 🐛 Remaning bugs
+## 🐛 Remaining bugs
 
 Some bugs remain unfixed for now : 
   * Sometimes, the user might be redirected to the profile page without apparent reason. This is caused by incorrect error handling (401 unauthorized should redirect, but not other errors)
   * If the language is different from english, it will not display in flip cards (kuroco bug)
 
+## Deploying the Gatsby App on KurocoFront
+
+To deploy the app, the kuroco_front.json file should be stored in the /static folder at the root of the project. Upon building, Gatsby will move this file into the /public folder where it can be statically accessed.
+
+# Functionalities
+
+In this part we will discuss how the features shown in KuroKanji were implemented.
+
+## Displaying content in Gatsby
+
+To display some content, we want to start by creating a page and place it under /src/pages :
+[![Image from Gyazo](https://t.gyazo.com/teams/diverta/326bf8f74737a3b8a3c1c795d7d72411.png)](https://diverta.gyazo.com/326bf8f74737a3b8a3c1c795d7d72411)
+
+This page should contain a React component that returns some JSX code :
+[![Image from Gyazo](https://t.gyazo.com/teams/diverta/2c83819d67e66131b4abd754634d4b88.png)](https://diverta.gyazo.com/2c83819d67e66131b4abd754634d4b88)
+
+Then, run Gatsby by running the command "gatsby develop" in the CLI.
+
+The new page should display at localhost:8000/example :
+[![Image from Gyazo](https://t.gyazo.com/teams/diverta/f4d53faee371ae2dd0fdb1a7ded7192f.png)](https://diverta.gyazo.com/f4d53faee371ae2dd0fdb1a7ded7192f)
+
+For KuroKanji, we do not include any logic (fetching, computation...) in the page. We will use a separate component.
+
+## The custom Axios loader
+
+In order to manage authentication and provide general fetching configuration, we can create a custom Axios client. To do this, create a new javascript file and have it export the following code :
+
+``
+import axios from "axios"
+
+export default axios.create({
+    baseURL: 'https://kurokanji.g.kuroco.app/rcms-api/',
+    credentials: true,
+    withCredentials: true
+})
+``
+
+This way, we do not need to add the base URL everytime. This may prevent errors and make the code more readable. Also, we use this configuration to store credentials in the client and send the correct headers for every request.
+
+## Basic features
+### Listing topics
+### Authentication
+### Creating a topic
+### Official topics
+### Favorite topics
+
+## Advanced features
+### Automatic card generation (using pre-processing)
+### Multi-language feature (using i18next)
