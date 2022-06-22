@@ -55,3 +55,11 @@ Material UI is a React library that gives developers ready-to-use components to 
 
 KuroKanji also uses the following tools :
   * Axios : used for building HTTP queries & interacting with Kuroco as well as managing authentication
+
+## 🐛 Remaning bugs
+
+Some bugs remain unfixed for now : 
+  * Sometimes, the user might be redirected to the profile page without apparent reason
+  * If the language is switched to japanese, it can't be changed back
+  * If the language is different from english, it will not display in flip cards (kuroco bug)
+
