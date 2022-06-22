@@ -89,14 +89,15 @@ For KuroKanji, we do not include any logic (fetching, computation...) in the pag
 
 In order to manage authentication and provide general fetching configuration, we can create a custom Axios client. To do this, create a new javascript file and have it export the following code :
 
-  import axios from "axios"
+```
+import axios from "axios"
 
-  export default axios.create({
-      baseURL: 'https://kurokanji.g.kuroco.app/rcms-api/',
-      credentials: true,
-      withCredentials: true
-  })
-
+export default axios.create({
+    baseURL: 'https://kurokanji.g.kuroco.app/rcms-api/',
+    credentials: true,
+    withCredentials: true
+})
+```
 
 This way, we do not need to add the base URL everytime. This may prevent errors and make the code more readable. Also, we use this configuration to store credentials in the client and send the correct headers for every request.
 
@@ -109,6 +110,27 @@ import axios from "../../authAxios"
 ## Basic features
 ### Listing topics
 
+To list some topics, let's start by creating them in Kuroco !
+
+Our content strcture looks like this :
+[![Image from Gyazo](https://t.gyazo.com/teams/diverta/d4355b9ab665c11aaac2e4e0c0979803.png)](https://diverta.gyazo.com/d4355b9ab665c11aaac2e4e0c0979803)
+("owner" extended column was replaced by Kuroro members, but we keep it for legacy purposes)
+
+Once the content structure is ready we can start generating some cards :
+[![Image from Gyazo](https://t.gyazo.com/teams/diverta/0375277c2a08bc5ed29c3e5b3c991252.png)](https://diverta.gyazo.com/0375277c2a08bc5ed29c3e5b3c991252)
+
+[![Image from Gyazo](https://t.gyazo.com/teams/diverta/f1e2626682b606077faea05b1aaeae28.png)](https://diverta.gyazo.com/f1e2626682b606077faea05b1aaeae28)
+
+Once our content is ready, let's create an API endpoint :
+
+[![Image from Gyazo](https://t.gyazo.com/teams/diverta/225f151097fde142533df7ddd41644d9.png)](https://diverta.gyazo.com/225f151097fde142533df7ddd41644d9)
+
+Don't forget to specify the topics_group_id parameter that should be equal to the content structure ID.
+
+We can test our configuration in Swagger :
+[![Image from Gyazo](https://t.gyazo.com/teams/diverta/593ab8c48626993f49f51eba5268a87d.png)](https://diverta.gyazo.com/593ab8c48626993f49f51eba5268a87d)
+
+やった ! We can get our cards with the Kuroco API !
 
 
 ### Authentication
