@@ -59,6 +59,6 @@ KuroKanji also uses the following tools :
 ## 🐛 Remaning bugs
 
 Some bugs remain unfixed for now : 
-  * Sometimes, the user might be redirected to the profile page without apparent reason
+  * Sometimes, the user might be redirected to the profile page without apparent reason. This is caused by incorrect error handling (401 unauthorized should redirect, but not other errors)
   * If the language is different from english, it will not display in flip cards (kuroco bug)
 
