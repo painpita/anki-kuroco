@@ -2,7 +2,7 @@ import * as React from "react"
 import PropTypes from "prop-types"
 import LanguageSelector from "./LanguageSelector";
 import {Link} from 'gatsby-plugin-react-i18next';
-import {Trans, useTranslation} from 'gatsby-plugin-react-i18next';
+import {Trans} from 'gatsby-plugin-react-i18next';
 const Header = ({ data }) => {
       // Use language iso for the routes
       return(<header
