@@ -724,3 +724,29 @@ We can use the dropdown to switch the language in our application :
 
 [![Image from Gyazo](https://t.gyazo.com/teams/diverta/7380672b44d1ca0162d17980599c5e35.gif)](https://diverta.gyazo.com/7380672b44d1ca0162d17980599c5e35)
 
+
+# ❓ Problems encountered - solutions implemented 
+
+Some problems were encountered by developping the application. Here are some of them and how they were solved - or not.
+
+   1. Understanding Gatsby, GraphQL, React, implications of static site generation 
+
+Since Gatsby is a toolkit on top of React, it has its own concepts and components. Implementing GraphQL queries can also be troublesome at first without prior experience.
+This Youtube channel is very useful : https://www.youtube.com/watch?v=Qms4k6y7OgI&list=PL4cUxeGkcC9hw1g77I35ZivVLe8k2nvjB
+For React, the official documentation is very well-made : https://reactjs.org/docs/getting-started.html
+
+  2. Implementing remote API fetching in Kuroco Smarty pre-processing
+
+Since the {api} function is not standard, there is no documentation online regarding how to use it. Fortunately this example is available on Diverta Github : 
+https://github.com/diverta/kuroco-smarty/blob/master/examples/API/REST/GoogleCloudVisionAPI/uploaded_image_check.tpl
+
+  3. Implementing multi-language support in the frontend
+
+The difficulty here stems from the multiple ways multi-language can be implemented. At first, the plugin gatsby-plugin-intl was used, but it showed limitation to handle dynamically generated pages. The solution came with using gatsby-plugin-i18n instead, which works seamlessly.
+
+  4. Handling multi-language with tags
+
+Unfortunately, Kuroco has a bug right now where queries for a language different from default together with tags will return nothing every time. Also, the _lang variable cannot be accessed in pre-processing, so we couldn't redirect queries automatically for undefined multi language cards.
+
+
+
