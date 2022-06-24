@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Paper } from "@mui/material";
 import "./new-card.scss"
 import TextField from '@mui/material/TextField';
@@ -10,29 +10,39 @@ import { Typography } from "@mui/material";
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import authAxios from "../../authAxios"
 import Swal from 'sweetalert2';
-import { navigate } from "gatsby"
 import { isLoggedIn } from "../services/auth";
-import {Trans, useTranslation} from 'gatsby-plugin-react-i18next';
+import {Trans, useI18next} from 'gatsby-plugin-react-i18next';
 
 const NewCard = ({props}) => {
+  const {language, navigate} = useI18next()
+
+  // This page should only be accessible by logged users
+  useEffect(()=>{
+    
+    const checkLogin = async () => {
+      try{
+        console.log("checked")
+        const user = await isLoggedIn()
+        if(user=={}){}
+        console.log("out of check")
+      }
+      catch{
+        console.log("caught some error")
+        navigate('/profile')
+      }
+    }
+    checkLogin()
+  },[])
 
   const defaultValues = {
     kanji: "",
     meanings: "",
     on: "",
     kun: "",
-    level: 0,
+    level: 16,
   };
   // The variable formValues is used to generate the request body. We use setFormValues in our change handlers to modify this variable.
   const [formValues, setFormValues] = useState(defaultValues)
-
-  // This page should only be accessible by logged users
-  try{
-    isLoggedIn()
-  }
-  catch{
-    navigate('/profile')
-  }
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -52,26 +62,48 @@ const NewCard = ({props}) => {
       "ext_5": "",
       "ext_6": "",
       "contents_type": formValues.level,
-      "validate_only": false
+      "validate_only": false,
     }
     try{
-      let req = await authAxios({
+         console.log("BEFORE CREATE")
+      const createReq = await authAxios({
       method:"post",
       url :"6/new",
       data: body})
+      console.log("LANGUAGE : " +language)
+      /* //CASE CASE WHERE LANGUAGE NOT DEFAULT : WE UPDATE AND PUBLISH
+      if(language!==("en"|""|undefined)){
+        console.log("WE UPDATE")
+        console.log(body)
+        const updateLangReq = await authAxios({
+          method:"post",
+          url :"6/update/" + createReq.data.id + "?_doc_lang=" + language,
+          data: body})
+          body.lang_open_flag = 0
+
+        const unpublishRed = await authAxios({
+            method:"post",
+            url :"6/update/" + createReq.data.id,
+            data: body})
+
+          navigate('/card_details/'+createReq.data.id, {state:{myCard:true,topics_id:createReq.data.id,locale:"locale"}})
+
+      } */
+      //else{
+        navigate('/card_details/'+createReq.data.id, {state:{myCard:true,topics_id:createReq.data.id,locale:"locale"}})
+      //}
+
       // Display the details if the request is successful. Note that we set myCards to true in props so the user can delete the card if needed
-     navigate('/card_details/'+req.data.id, {state:{myCards:true, topics_id:req.data.id}})
     }
     catch(e){
+      console.log(e)
       Swal.fire({
         title: 'Error !',
         text: 'Something went wrong',
         icon: 'error',
         confirmButtonText: ':('
       })
-      
     }
-    console.log(body)
   }
 
   // This function will set the state when the slider component is used.
@@ -153,7 +185,7 @@ const NewCard = ({props}) => {
           defaultValue={16}
           step={1}
           min={16}
-          max={20}
+          max={21}
           marks={[
             {
               value: 16,
@@ -174,6 +206,10 @@ const NewCard = ({props}) => {
             {
               value: 20,
               label: "5",
+            },
+            {
+              value: 21,
+              label: "6",
             },
           ]}
           valueLabelDisplay="off"
