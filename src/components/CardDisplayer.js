@@ -7,8 +7,10 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import {isLoggedIn} from "../services/auth"
 import { useState } from "react";
 import {navigate} from "gatsby"
+import { useI18next } from "gatsby-plugin-react-i18next";
 const CardDisplayer = (props) => {
   const [displayCards, setDisplayCards] = useState([])
+  const language = useI18next().language
   // Use language iso for the routes
   useEffect(()=>{
     getCards()
@@ -19,15 +21,16 @@ const CardDisplayer = (props) => {
     try{
       switch(props.mode){
         case("my-cards"): 
-          url = "/6/my-cards?cnt="; 
+          url = '/6/my-cards?' + "_lang=" + language + "&cnt=" + props.numberOfCards; 
           break;
         case("favorites"): 
-          url = "/6/get-fav?cnt="; 
+          url = "/6/get-fav?" + "_lang=" + language + "&cnt=" + props.numberOfCards; 
           break;
         default: 
-          url = "/4/random-cards?cnt=";
+          url = "/4/random-cards?" + "_lang=" + language + "&cnt=" + props.numberOfCards; 
+          
         }
-        const cardsReq = await axios.get(url+props.numberOfCards)
+        const cardsReq = await axios.get(url)
         const cardsFromReq = cardsReq.data.list
         setDisplayCards(convertCardsToHtml(cardsFromReq))
     }
