@@ -2,7 +2,7 @@
 
 ![workflow](https://github.com/painpita/anki-kuroco/actions/workflows/build.yml/badge.svg)
 
-[Deployment](https://kurokanji.g.kuroco-front.app/)
+[Try me on KurocoFront !](https://kurokanji.g.kuroco-front.app/)
 ## _A simple Kanji learning app based on Kuroco_
 
 Powered by Gatsby, a React Framework ⚛️
