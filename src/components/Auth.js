@@ -20,7 +20,6 @@ const Auth = (props) =>{
       display: "flex",
       flex: "1",
       justifyContent: "space-between",
-      borderBottom: "1px solid #d1c1e0",
     }}
   >
     <Login></Login>
