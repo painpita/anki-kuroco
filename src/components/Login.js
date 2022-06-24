@@ -41,8 +41,9 @@ const Login = (props) =>{
 
     return (
       <div className="formWrapper">
-         <Typography><Trans>not_logged_in</Trans></Typography>
           <ValidatorForm className="formWrapper" onSubmit={handleSubmit}>
+          <Typography><Trans>not_logged_in</Trans></Typography>
+
           <TextValidator
               className="email" 
               label="email" 
