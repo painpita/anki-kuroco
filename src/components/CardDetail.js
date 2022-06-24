@@ -15,6 +15,7 @@ import OpenInFullIcon from '@mui/icons-material/OpenInFull';
 import Collapse from '@mui/material/Collapse';
 import Swal from 'sweetalert2';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import {getTopicsId, setTopicsId} from "../services/changeLangKeepTopicsId"
 const CardDetail = (props) =>{
   const [liked, setLiked] = useState(false)
   const [card, setCard] = useState({})
@@ -22,19 +23,26 @@ const CardDetail = (props) =>{
   const {language} = useI18next()
   const [checked, setChecked] = React.useState(false);
   const [displayWarning, setDisplayWarning] = React.useState(false)
+
+  // When changing the language while inspecting card details, there was an error
+  // It happened because changing language would reset the props.
+  // To fix this, we created a "store" that keeps the value between the 2 lang pages
+  let getThisTopicId = props.topics_id;
+  getThisTopicId===undefined ? getThisTopicId= getTopicsId() : setTopicsId(getThisTopicId)
+
   useEffect(()=>{
     const getCard = async () =>{
       let cardsReq = null;
       try{
         //HTTP request using the topics_id that was passed through location
-        cardsReq = await axios.get("4/card-detail/"+props.topics_id+"?_lang="+language)
+        cardsReq = await axios.get("4/card-detail/"+getThisTopicId+"?_lang="+language)
         await setCard(cardsReq.data.details)
       }
       catch(e){
         try{
         if(e.response.status===404){
           //If we get 4O4 it means that the topic is not defined for this language. We get the default language and display a small warning.
-          cardsReq = await axios.get("4/card-detail/"+props.topics_id)
+          cardsReq = await axios.get("4/card-detail/"+getThisTopicId)
           setDisplayWarning(!displayWarning)
 
           //using a setstate function to let the interface update asynchronously
@@ -72,7 +80,7 @@ const CardDetail = (props) =>{
 
   const deleteThisCard = async () => {
     try{
-      await axios.post("6/card-delete/"+props.topics_id)
+      await axios.post("6/card-delete/"+getThisTopicId)
       navigate("/my-cards")
     }
     catch(e){
