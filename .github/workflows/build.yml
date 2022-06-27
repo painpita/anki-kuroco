@@ -7,20 +7,16 @@ on:
     types: [created, edited]
   workflow_dispatch:
 jobs:
-  #e2e
   cypress-run:
-    runs-on: ubuntu-latest
-    container: cypress/browsers:node12.18.3-chrome87-ff82
+    runs-on: ubuntu-20.04
+    # let's make sure our tests pass on Chrome browser
+    name: E2E on Chrome
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
-      - name: Cypress run
-        uses: cypress-io/github-action@v4
+      - uses: actions/checkout@v2
+      - uses: cypress-io/github-action@v4
         with:
-          # Specify Browser since container image is compile with Firefox
-          browser: electron
+          browser: chrome
+
   #for Push
   pushed_build:
     name: Build(pushed)
