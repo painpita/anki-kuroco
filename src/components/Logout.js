@@ -5,13 +5,13 @@ import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import { Button} from "@mui/material"
 import axios from "../../authAxios";
 import {useEffect, useState } from "react"
-import {Trans, useTranslation} from 'gatsby-plugin-react-i18next';
+import {Trans, useI18next} from 'gatsby-plugin-react-i18next';
 
 const Logout = (props) => {
 
     // Use language iso for the routes
     const [nbCards, setNbCards] = useState(0)
-
+    const t = useI18next()
     useEffect(()=>{
         const getNumberOfCards = async () => {
             try{
@@ -30,6 +30,7 @@ const Logout = (props) => {
     const handleSubmit = async event => {
         event.preventDefault()
         await handleLogout()
+        t.navigate('/')
     }
 
         return(<>
