@@ -6,6 +6,6 @@ describe("Header", () => {
     const tree = renderer
       .create(<Header siteTitle="Default Starter" />)
       .toJSON()
-    expect(tree).toMatchSnapshot()
+    expect(tree).toMatchSnapshot() 
   })
 })
