@@ -11,8 +11,11 @@ const Auth = (props) =>{
     const getUser = await isLoggedIn()
     setUser(getUser)
   }
-  getUser()
-    
+
+  useEffect(()=>{
+    getUser()
+  },[])    
+
     if((user==null)|(user==undefined)){
       return(<Paper className={"paper"}>
       <div
