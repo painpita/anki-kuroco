@@ -4,7 +4,6 @@ import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import { Button, Typography }  from "@mui/material";
 import {useState} from "react"
 import {Trans, useI18next} from 'gatsby-plugin-react-i18next';
-
 import "./auth.scss"
 const Login = (props) =>{
 
@@ -22,8 +21,6 @@ const Login = (props) =>{
       ...loginInfo,
       [event.target.name] : event.target.value
     })
-    console.log(loginInfo)
-
   }
 
   const handleSubmit = async event => {
