@@ -62,7 +62,6 @@ KuroKanji also uses the following tools :
 
 Some bugs remain unfixed for now : 
   * Sometimes, the user might be redirected to the profile page without apparent reason. This is caused by incorrect error handling (401 unauthorized should redirect, but not other errors)
-  * If the language is different from english, it will not display in flip cards (kuroco bug)
   * When expecting card details, changing the language will trigger a 404 error if the card is not defined in target language
   
 ## Deploying the Gatsby App on KurocoFront
@@ -747,6 +746,6 @@ The difficulty here stems from the multiple ways multi-language can be implement
   4. Handling multi-language with tags
 
 Unfortunately, Kuroco has a bug right now where queries for a language different from default together with tags will return nothing every time. Also, the _lang variable cannot be accessed in pre-processing, so we couldn't redirect queries automatically for undefined multi language cards.
-
+UPDATE : bug fixed by adding a translation for the tag in Kuroco, but it is still weird that this only affects lists
 
 

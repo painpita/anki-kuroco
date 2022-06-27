@@ -27,7 +27,8 @@ module.exports = {
           siteUrl: `http://localhost:8000/`,
           i18nextOptions: {
             interpolation: {
-              escapeValue: false 
+              escapeValue: false, 
+              useSuspense:false,
             },
             //keySeparator: false,
             nsSeparator: false
