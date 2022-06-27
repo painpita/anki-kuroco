@@ -1,6 +1,10 @@
 describe('My First Test', () => {
     it('logs in, visits mycards, checks the content of a card', () => {
-      cy.visit('http://localhost:8000')
+      cy.visit('http://localhost:8000',{
+      headers: {
+        "Accept-Encoding": "gzip, deflate",
+        "Connection" : "Keep-Alive"
+      }})
       cy.contains('My cards').click()
       cy.url().should("include","/profile")
       cy.get("input[name='email']")

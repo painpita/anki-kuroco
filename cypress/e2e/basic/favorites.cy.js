@@ -1,7 +1,11 @@
 // <reference types="Cypress" /> 
 describe('Favorites', () => {
     it('visits favorites, logs in, goes back to favorites, like a card, gets a 200 OK ', () => {
-      cy.visit('http://localhost:8000/favorites')
+      cy.visit('http://localhost:8000/favorites',{
+      headers: {
+        "Accept-Encoding": "gzip, deflate",
+        "Connection" : "Keep-Alive"
+      }})
       cy.get('form')
       cy.login()
       cy.get("a[href='/favorites/']")
