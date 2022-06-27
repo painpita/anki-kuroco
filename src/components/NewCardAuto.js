@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 import { navigate } from "gatsby"
 import { isLoggedIn } from "../services/auth";
 import {Trans, useI18next} from 'gatsby-plugin-react-i18next';
-
+import KanjiSearchBar from "./KanjiSearchBar";
 const NewCardAuto = ({props}) => {
 
   const {t} = useI18next()
@@ -92,7 +92,7 @@ const NewCardAuto = ({props}) => {
         color:"white",
       }}
     elevation={8}>
-      
+      {/* <KanjiSearchBar></KanjiSearchBar> */}
       <ValidatorForm className="newCardForm" onSubmit={handleSubmit}>
       <Typography component="h1" variant="">
       <Trans>create_new_automatic</Trans>
