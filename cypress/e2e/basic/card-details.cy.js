@@ -4,7 +4,8 @@ describe('My First Test', () => {
       headers: {
         "Accept-Encoding": "gzip, deflate",
         "Connection" : "Keep-Alive"
-      }})
+      },
+    timeout:30000})
       cy.contains('My cards').click()
       cy.url().should("include","/profile")
       cy.get("input[name='email']")

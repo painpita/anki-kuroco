@@ -5,7 +5,8 @@ describe('Favorites', () => {
       headers: {
         "Accept-Encoding": "gzip, deflate",
         "Connection" : "Keep-Alive"
-      }})
+      },
+      timeout:30000})
       cy.get('form')
       cy.login()
       cy.get("a[href='/favorites/']")
