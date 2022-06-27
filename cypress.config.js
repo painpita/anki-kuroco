@@ -4,12 +4,11 @@ module.exports = {
       // implement node event listeners here
     },
   },
-
+  pageLoadTimeout: 120000,
   component: {
     devServer: {
       framework: "react",
       bundler: "webpack",
-      webpackConfig: require('./node_modules/gatsby/dist/utils/webpack.config.js'),
     },
   },
 };
