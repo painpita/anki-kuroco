@@ -7,6 +7,15 @@ on:
     types: [created, edited]
   workflow_dispatch:
 jobs:
+ unit-test:
+    runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v2
+      - name: Install modules
+        run: yarn
+      - name: Run tests
+        run: yarn test
+
   cypress-run:
     runs-on: ubuntu-20.04
     # let's make sure our tests pass on Chrome browser
