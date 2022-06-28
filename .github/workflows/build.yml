@@ -17,6 +17,7 @@ jobs:
         with:
           build: npm run build
           start: npm start
+          command: npm run e2e
           browser: chrome
 
   #for Push
