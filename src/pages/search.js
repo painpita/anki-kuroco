@@ -1,13 +1,13 @@
 import React from "react";
 import Layout from "../components/Layout"
-import NewCardContainer from "../components/NewCardContainer";
+import SearchCardContainer from "../components/SearchCardContainer";
 import {graphql} from "gatsby"
 import "./main.scss"
 
-const newPage = () => <div>
+const SearchPage = () => <div>
   <Layout>
     <div className="newCardContainer">
-      <NewCardContainer></NewCardContainer>
+      <SearchCardContainer></SearchCardContainer>
     </div>
   </Layout>
   </div>
@@ -24,4 +24,4 @@ query($language: String!) {
   }
 }
 `;
-export default newPage;
+export default SearchPage;

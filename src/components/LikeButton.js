@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense} from "react"
+import React, { useState, useEffect } from "react"
 import "./like-button.scss"
 import axios from "../../authAxios"
 const LikeButton = (props) => {

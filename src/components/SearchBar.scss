@@ -1,0 +1,12 @@
+.searchContainer{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.searchResultContainer{
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    z-index:5;
+    width:60%;
+}

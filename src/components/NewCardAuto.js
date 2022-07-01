@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 import { navigate } from "gatsby"
 import { isLoggedIn } from "../services/auth";
 import {Trans, useI18next} from 'gatsby-plugin-react-i18next';
-import KanjiSearchBar from "./KanjiSearchBar";
+import SearchBar from "./SearchBar";
 const NewCardAuto = ({props}) => {
 
   const {t} = useI18next()
@@ -54,7 +54,7 @@ const NewCardAuto = ({props}) => {
       //headers: {'Content-Type' : 'application/json'},
       data: body})
       console.log(req)
-      let result = await  Swal.fire({
+      Swal.fire({
         title: t('congratulations'),
         text: t('new_card_created'),
         icon: 'success',
@@ -87,15 +87,10 @@ const NewCardAuto = ({props}) => {
     });
   };
   return (
-  <Paper className={"newCard"}
-    sx={{
-        color:"white",
-      }}
-    elevation={8}>
-      {/* <KanjiSearchBar></KanjiSearchBar> */}
-      <ValidatorForm className="newCardForm" onSubmit={handleSubmit}>
+    <>
+      <SearchBar className='searchBar'></SearchBar>
+      {/* <ValidatorForm className="newCardForm" onSubmit={handleSubmit}>
       <Typography component="h1" variant="">
-      <Trans>create_new_automatic</Trans>
       </Typography>
         <FormControl>
             <TextValidator
@@ -113,8 +108,8 @@ const NewCardAuto = ({props}) => {
         <Button type="submit" className="newKanjiButton">
           <Trans>save</Trans>
         </Button>
-        </ValidatorForm >
-      </Paper>
+        </ValidatorForm> */}
+      </>
     )
 } 
 

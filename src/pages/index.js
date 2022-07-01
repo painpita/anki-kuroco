@@ -5,7 +5,7 @@ import {graphql} from "gatsby"
 
 const index = () => <div>
   <Layout>
-    <CardDisplayer mode="all" numberOfCards={10}></CardDisplayer>
+    <CardDisplayer mode="validated" numberOfCards={10}></CardDisplayer>
   </Layout>
   </div>
 

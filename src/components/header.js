@@ -46,6 +46,16 @@ const Header = ({ data }) => {
               <Trans>favorites</Trans>
             </Link>
             <Link
+             to='/search'
+              style={{
+                marginRight:"20px",
+                fontSize: `var(--font-sm)`,
+                textDecoration: `none`,
+              }}
+            >
+              <Trans>search</Trans>
+            </Link>
+            {/* <Link
               to="/new"
               style={{
                 marginRight:"20px",
@@ -54,7 +64,7 @@ const Header = ({ data }) => {
               }}
             >
             <Trans>new_card</Trans>
-            </Link>
+            </Link> */}
           </span>
           
           <span className="link-group link-group-right">
