@@ -1,4 +1,3 @@
-import { navigate } from "gatsby"
 import React from "react"
 import {handleLogout} from "../services/auth"
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';

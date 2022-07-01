@@ -1,0 +1,17 @@
+.searchResult{
+    padding:10px;
+    border-bottom:1px solid lightgray;
+    align-items:center;
+}
+
+.searchContent{
+    border-right:1px solid gray;
+    width:33%;
+    padding-left:3%;
+    text-align: left;
+    width:60%;
+}
+
+.searchContent:last-child{
+    border:none;
+}

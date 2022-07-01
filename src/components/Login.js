@@ -1,5 +1,5 @@
 import React from "react"
-import { handleLogin, isLoggedIn } from "../services/auth"
+import { handleLogin } from "../services/auth"
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import { Button, Typography }  from "@mui/material";
 import {useState} from "react"
