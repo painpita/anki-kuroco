@@ -1,11 +1,16 @@
 import React from "react"
 import "./card.scss"
-import { navigate } from "gatsby";
-import { Link, useI18next } from "gatsby-plugin-react-i18next";
+import { useI18next } from "gatsby-plugin-react-i18next";
 import { Fade } from "@mui/material";
+import _ from "lodash"
 const Card = (props) => {
     const t = useI18next()
 
+    const transformMeanings = (meanings) =>
+    {
+      meanings = meanings.split(", ")
+      return _.capitalize(meanings[0])
+    }
     const handleClick = () => {
       t.navigate('/card_details/'+props.card.subject, {state:{myCard:props.myCard,topics_id:props.card.topics_id,locale:"locale"}})
     }
@@ -14,11 +19,11 @@ const Card = (props) => {
       <div role="command" className="card" onClick={handleClick} onKeyDown={handleClick}>
         <div className="content">
           <div className="front">
-            {props.card.ext_1}
+           { props.card.ext_1}
           </div>
           <div className="back">
             <div className="meanings">
-              {props.card.ext_2.split("\n").join("· ")}
+              {transformMeanings(props.card.ext_2)}
             </div>
             <div className="pronunciations">
               {props.card.ext_3.split("\n").join("· ")}

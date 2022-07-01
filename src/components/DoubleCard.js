@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 import { isLoggedIn } from "../services/auth";
 import {Trans, useI18next} from 'gatsby-plugin-react-i18next';
 
-const NewCard = ({props}) => {
+const DoubleCard = ({props}) => {
   const {language, navigate} = useI18next()
 
   // This page should only be accessible by logged users
@@ -23,7 +23,7 @@ const NewCard = ({props}) => {
       try{
         console.log("checked")
         const user = await isLoggedIn()
-        if(user==={}){}
+        if(user=={}){}
         console.log("out of check")
       }
       catch{
@@ -71,24 +71,6 @@ const NewCard = ({props}) => {
       url :"6/new",
       data: body})
       console.log("LANGUAGE : " +language)
-      /* //CASE CASE WHERE LANGUAGE NOT DEFAULT : WE UPDATE AND PUBLISH
-      if(language!==("en"|""|undefined)){
-        console.log("WE UPDATE")
-        console.log(body)
-        const updateLangReq = await authAxios({
-          method:"post",
-          url :"6/update/" + createReq.data.id + "?_doc_lang=" + language,
-          data: body})
-          body.lang_open_flag = 0
-
-        const unpublishRed = await authAxios({
-            method:"post",
-            url :"6/update/" + createReq.data.id,
-            data: body})
-
-          navigate('/card_details/'+createReq.data.id, {state:{myCard:true,topics_id:createReq.data.id,locale:"locale"}})
-
-      } */
       //else{
         navigate('/card_details/'+createReq.data.id, {state:{myCard:true,topics_id:createReq.data.id,locale:"locale"}})
       //}
@@ -122,10 +104,15 @@ const NewCard = ({props}) => {
       [name]: value,
     });
   };
-  return (
-    <>
+
+  return (<Paper className={"newCard"}
+    sx={{
+        color:"white",
+      }}
+    elevation={8}>
       <ValidatorForm className="newCardForm" onSubmit={handleSubmit}>
       <Typography component="h1" variant="">
+        <Trans>create_new</Trans>
       </Typography>
         <FormControl>
             <TextValidator
@@ -214,8 +201,8 @@ const NewCard = ({props}) => {
           <Trans>save</Trans>
         </Button>
         </ValidatorForm >
-      </>
+      </Paper>
     )
 } 
 
-export default NewCard
+export default DoubleCard

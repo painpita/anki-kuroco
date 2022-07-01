@@ -21,5 +21,6 @@
     "congratulations": "おめでとうございます！",
     "new_card_created" : "新しいカードが作成されました",
     "check_it_out" : "行ってみよう !",
-    "wrong_language" : "このカードーは英語に翻訳されています" 
+    "wrong_language" : "このカードーは英語に翻訳されています",
+    "search" : "探す"
 }

@@ -1,5 +1,4 @@
 import axios from "../../authAxios"
-import {navigate} from "gatsby"
 
 export var loggedUser = null
 export const isBrowser = () => typeof window !== "undefined"

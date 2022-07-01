@@ -3,6 +3,11 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+    width:100%;
+}
+
+.cardContainerWrapper{
+    display:flex;
 }
 
 h1{

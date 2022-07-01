@@ -16,6 +16,10 @@ import Collapse from '@mui/material/Collapse';
 import Swal from 'sweetalert2';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import {getTopicsId, setTopicsId} from "../services/changeLangKeepTopicsId"
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ReactCountryFlag from "react-country-flag";
+import { Link } from "gatsby-plugin-react-i18next";
+import _ from "lodash"
 const CardDetail = (props) =>{
   const [liked, setLiked] = useState(false)
   const [card, setCard] = useState({})
@@ -93,11 +97,30 @@ const CardDetail = (props) =>{
     setChecked(!checked)
   }
 
+  const navigateBack = () => {
+    navigate(window.history.back())
+  }
+
+  const splitAndCapitalize = (meanings) =>
+  {
+    if(meanings===undefined) return
+    meanings = meanings.split(", ")
+    meanings = meanings.map(elem=>{
+      return _.capitalize(elem)
+    })
+    meanings = [meanings].join("· ")
+    return meanings
+  }
+
+  const flags = {
+    en : <ReactCountryFlag countryCode="GB" />,
+    fr : <ReactCountryFlag countryCode="FR" />,
+    ja : <ReactCountryFlag countryCode="JP" />
+  }
 
   let deleteButton = (props.myCard ? <Button className="deleteButtonWrapper" onClick={deleteThisCard.bind()}><DeleteIcon/></Button> : <></>)
   let relatedWords = card.ext_6 ? 
   <Typography variant="" component="div" className="examples-wrapper">
-    {/*<Trans>related_words</Trans>*/}
       <Collapse className="related_words" orientation="vertical" in={checked} collapsedSize={22}>
         <ul>
           {card.ext_6.split("\n").slice(0,-1).map((elem)=><li>{elem}</li>)}
@@ -106,7 +129,7 @@ const CardDetail = (props) =>{
       <Button onClick={collapse}><OpenInFullIcon className="customIcon"></OpenInFullIcon></Button>
   </Typography> 
   : ""
-  let warningButton = displayWarning ? <div className="tooltip"><WarningAmberIcon data-hover="Wrong language" className="warningButton"></WarningAmberIcon><div className="tooltiptext"><Trans>wrong_language</Trans></div></div> : ""
+  let requestTranslation = displayWarning ? <Link to={`/translation_request/${card.topics_id}`}><Trans>wrong_language</Trans><span className="requestTranslation">{flags[language]}</span></Link> : <span></span>
   return(
   <Paper className={"paper"}
       sx={{
@@ -114,12 +137,15 @@ const CardDetail = (props) =>{
         color:'white'
       }}
     elevation={8}>
-      {warningButton}
+    <div className="cardHeader">
+        <Button onClick={navigateBack}><ArrowBackIcon /></Button>
+        {requestTranslation}
+    </div>
     <Typography variant="" component="h1">
     {card.ext_1} 
     </Typography>
     <Typography variant="" component="h2">
-      <Trans>meanings</Trans> : {card.ext_2}
+      <Trans>meanings</Trans> : {splitAndCapitalize(card.ext_2)}
     </Typography>
     <Typography variant="" component="p">
       <Trans>onyomi_readings</Trans> : {card.ext_3}
