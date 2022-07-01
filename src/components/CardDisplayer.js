@@ -19,7 +19,7 @@ const CardDisplayer = (props) => {
   // Use language iso for the routes
   useEffect(()=>{
     getCards()
-  }, [filterGrade])
+  }, [filterGrade, pageID])
 
   async function getCards(){
     let url = ""
@@ -58,14 +58,12 @@ const CardDisplayer = (props) => {
     console.log(direction)
     if((pageID===1&&direction===-1) || (pageID===totalPageCnt&&direction===1)) return 
     setPageID(pageID+direction)
-    getCards()
   }
 
   const handleChange = (event) => {
     console.log("handling change")
     console.log(event.target.value)
     setFilterGrade(event.target.value);
-    console.log(filterGrade)
   };
 
 
