@@ -78,6 +78,16 @@ const Header = ({ data }) => {
             >
               <Trans>profile</Trans>
             </Link>
+            <Link
+            to="/challenge"
+              style={{
+                marginRight:"20px",
+                fontSize: `var(--font-sm)`,
+                textDecoration: `none`,
+              }}
+            >
+              Challenge
+            </Link>
             <LanguageSelector></LanguageSelector>
 
             <img
