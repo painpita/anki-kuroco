@@ -13,7 +13,7 @@ const startGame = (userName1, client1, userName2, client2) => {
 }
 
 const sendGameRequest = (userName2) => {
-  if(userName2 in clientList.keys()){
+  if(Object.keys(clientList).includes(userName2)){
     clientList[userName2].send(JSON.stringify({type:'GAME_REQUEST', data:userName2}));
   }
 }
