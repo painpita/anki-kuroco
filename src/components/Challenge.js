@@ -35,7 +35,11 @@ const Challenge = (props) => {
               text: `${JSONObject.data} challenged you !`,
               icon: 'warning',
               confirmButtonText: 'Accept'
-            }).then(navigate('/game'))
+            }).then(value=>{
+              if(value.isConfirmed) {
+                socket.send(JSON.stringify({type:'GAME_ACCEPTED'}))
+              }
+            })
             break;
           default:
             window.alert(`Got default case with ${JSONObject.type}`)
