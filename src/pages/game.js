@@ -1,6 +1,5 @@
 import React from "react";
 import Layout from "../components/Layout"
-import CardDisplayer from "../components/CardDisplayer";
 import {graphql} from "gatsby"
 import ChallengeContainer from "../components/ChallengeContainer";
 
