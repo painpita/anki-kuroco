@@ -1,5 +1,5 @@
-const WebSocketServer = require('ws');
-//const Game = require('./classes/Game.ts').Game;
+import WebSocketServer from 'ws'
+import Game from './classes/Game'
 const wss = new WebSocketServer.Server({ port: 8081 });
 
 let clientList = {}
@@ -9,7 +9,7 @@ const storeClient = (username, client) => {
 }
 
 const startGame = (userName1, client1, userName2, client2) => {
-  //new Game(userName1, client1, userName2, client2);
+  new Game(userName1, client1, userName2, client2);
 }
 
 const sendGameRequest = (userName2) => {
